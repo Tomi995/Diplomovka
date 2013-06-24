@@ -17,7 +17,7 @@ public class EmulatorAS {
         // TODO code application logic here
         Inicializacia skuska = new Inicializacia();
        // skuska.hladaj("fsfsd:Fetch-x:SUB:STore-y:add:store-xFetch- z");
-        
+        // test
         System.out.println(skuska.iniciiuj("add:fetch-s:add:add"));
       /*   
         Stav teest = new Stav();
