@@ -18,10 +18,8 @@ public class Inicializacia {
 
         if (kontrola(text)) {
             hladaj(text);
-            System.out.println("preslo parserom");
-        } else {
-            System.out.println("Chybny vstup");
-        }
+            System.out.println("preslo parserom");             //text na zmazanie
+        } 
         return null;
 
     }
@@ -49,8 +47,8 @@ public class Inicializacia {
                 }
             }
         }
-
-        System.out.println(vlozDoStavu(vsetky_premenne));
+        vlozDoStavu(vsetky_premenne);
+        System.out.println(vlozDoStavu(vsetky_premenne));      //text na zmazanie
         return null;
     }
 
@@ -58,13 +56,20 @@ public class Inicializacia {
         String vstupnytext = text.toUpperCase();
 
         Integer index = 0;
-        Pattern pattern = Pattern.compile("^(((FETCH-|STORE-)[A-Z])|ADD|SUB)(:((FETCH-|STORE-)[A-Z]|ADD|SUB))*$");
+        
+        String pomocny ="(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]\\1,\\1[)]|LOOP[(],[)])+";
+        String regex = "^(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]"+pomocny+","+pomocny+"[)]|LOOP[(]"+pomocny+","+pomocny+"[)])+$";
+        
+        
+        Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(vstupnytext);
         
         if (match.find()) {
+            System.out.println(match.group());
+            System.out.println(pattern.toString());
             return true;
         } else {
-           throw new MyParserException();
+           throw new MyParserException( "chybny kod!");
         }
 
     }

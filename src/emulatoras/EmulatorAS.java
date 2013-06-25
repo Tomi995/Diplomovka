@@ -13,13 +13,17 @@ public class EmulatorAS {
     /**
      * @param args the command line arguments
      */
-     public static void main(String[] args) {
+     public static void main(String[] args) throws MyParserException {
         // TODO code application logic here
         Inicializacia skuska = new Inicializacia();
        // skuska.hladaj("fsfsd:Fetch-x:SUB:STore-y:add:store-xFetch- z");
         // test
-        System.out.println(skuska.iniciiuj("add:fetch-s:add:add"));
-      /*   
+         try {
+             System.out.println(skuska.iniciiuj("branch(add,add)"));
+         } catch (MyParserException e) {             
+         }
+         
+        /*   
         Stav teest = new Stav();
          
          teest.vlozPremennu("z", 3);
