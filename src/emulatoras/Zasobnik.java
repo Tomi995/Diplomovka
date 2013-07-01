@@ -35,14 +35,14 @@ public class Zasobnik {
      *
      * @return
      */
-    public String vyber() {
+    public String vyber() throws ZasobnikException {
         String navratova_hodnota;
         if (!zasobnik.isEmpty()) {
 
             navratova_hodnota = zasobnik.get(zasobnik.size() - 1);
             zasobnik.remove(zasobnik.size() - 1);
         } else {
-            navratova_hodnota = null;
+            throw new ZasobnikException("Prazdny zasobnik");
         }
         return navratova_hodnota;
     }
@@ -61,14 +61,14 @@ public class Zasobnik {
      *
      * @param text
      */
-    public void vloz(String text) {
+    public void vloz(String text) throws ZasobnikException {
         text = text.toUpperCase();
         if (text.equals("TRUE")) {
             zasobnik.add("tt");
         } else if (text.equals("FALSE")) {
             zasobnik.add("ff");
         } else {
-            System.out.println("neplatna hodnota"); //osetrit co sa stane ak vlozim text ale nie bool hodnotu
+            throw new ZasobnikException("Hodnota je nepodporovana pre zasobnik");
         }
     }
 
@@ -77,13 +77,21 @@ public class Zasobnik {
      *
      * @return
      */
-    public Boolean jeCislo() {
-        String vrchZasobnika = zasobnik.get(zasobnik.size() - 1);
+    public Boolean jeCislo() throws ZasobnikException, IndexOutOfBoundsException {
+
         try {
-            Integer.parseInt(vrchZasobnika);
-        } catch (NumberFormatException e) {
-            return false;
+            String vrchZasobnika = zasobnik.get(zasobnik.size() - 1);
+
+            try {
+                Integer.parseInt(vrchZasobnika);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            return true;
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new ZasobnikException("Prazdny zasobnik");
         }
-        return true;
+
     }
 }

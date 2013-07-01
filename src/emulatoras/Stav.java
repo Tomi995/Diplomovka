@@ -6,6 +6,7 @@ package emulatoras;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import javax.swing.text.DefaultEditorKit;
 
 /**
@@ -15,7 +16,7 @@ import javax.swing.text.DefaultEditorKit;
 public class Stav {
 
     Hashtable<String, Integer> stav = new Hashtable<String, Integer>();
-    ArrayList<Hashtable> stavy = new ArrayList<Hashtable>();
+    List<Hashtable> stavy = new ArrayList<Hashtable>();
 
     /**
      *vlozi premennu do stavu nula bez jeho aktuaizacie
@@ -23,10 +24,10 @@ public class Stav {
      * @param hodnota
      */
     public void vlozPremennu(String premenna, Integer hodnota) {
-       premenna.toUpperCase();
+       premenna = premenna.toUpperCase();
         if (stavy.isEmpty()) {
             if (hodnota == null) {
-            stav.put(premenna, null);
+            stav.put(premenna, null);   // vyskusat s new integer
         } else {
             stav.put(premenna, hodnota);
         }
@@ -38,7 +39,6 @@ public class Stav {
            stavy.get(0).put(premenna, hodnota);
         }
         }
-        
     }
 
     /**
@@ -47,7 +47,7 @@ public class Stav {
      * @param hodnota
      */
     public void vlozHodnotu(String premenna, Integer hodnota) {
-        premenna.toUpperCase();
+        premenna = premenna.toUpperCase();
         Hashtable<String, Integer> stav = (Hashtable) stavy.get(stavy.size()-1).clone() ;
         
         stav.put(premenna, hodnota);
@@ -70,5 +70,6 @@ public class Stav {
         Hashtable<String, Integer> stavv = stavy.get(stav);
         return stavv.get(premenna);
     }
+
 
 }

@@ -5,6 +5,7 @@
 package emulatoras;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,10 +17,10 @@ public class Inicializacia {
 
     public String iniciiuj(String text) throws MyParserException {
 
-        if (kontrola(text)) {
+        if (kontrola(text)) {                                   // pe vyhladanie syntaktickych chyb....bude treba funkciu ako v parsery
             hladaj(text);
             System.out.println("preslo parserom");             //text na zmazanie
-        } 
+        }
         return null;
 
     }
@@ -34,42 +35,53 @@ public class Inicializacia {
     public String hladaj(String text) {
 
         String vstupnytext = text.toUpperCase();
-        ArrayList<Character> vsetky_premenne = new ArrayList<Character>();
+        List<String> vsetky_premenne = new ArrayList<>();         // vsetky premenne najdene na zaciatku
 
 
-        Pattern pattern = Pattern.compile("(FETCH-|STORE-)[A-Z]");
+        Pattern pattern = Pattern.compile("(FETCH-|STORE-)([A-Z])+");
         Matcher match = pattern.matcher(vstupnytext);
 
         while (!match.hitEnd()) {
             if (match.find()) {
-                if (!vsetky_premenne.contains(match.group().charAt(match.group().length() - 1))) {
-                    vsetky_premenne.add(match.group().charAt(match.group().length() - 1));
+
+                int index = 6;
+                String premenna = "";
+                while (index != match.group().length()) {
+                    premenna = premenna + match.group().charAt(index);              // vlozenie slovnej premenne nie iba pismenko
+                    index++;
                 }
+                vsetky_premenne.add(premenna);
+
             }
         }
-        vlozDoStavu(vsetky_premenne);
-        System.out.println(vlozDoStavu(vsetky_premenne));      //text na zmazanie
+        vlozDoStavu(vsetky_premenne);          // vlozenie vsetkych premennych do pociatocneho stavu 
+        System.out.println(vsetky_premenne);      //text na zmazanie
         return null;
     }
 
-    public Boolean kontrola(String text) throws MyParserException {
-        String vstupnytext = text.toUpperCase();
+    /**
+     * Zisti ci je vlozeny kod syntakticky spravny
+     *
+     * @param text
+     * @return
+     * @throws MyParserException
+     */
+    public Boolean kontrola(String text) throws MyParserException {        
+        String vstupnytext = text.toUpperCase();                                // bude treba celu prerobit kedze nekurzija nefunguje
 
         Integer index = 0;
-        
-        String pomocny ="(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]\\1,\\1[)]|LOOP[(],[)])+";
-        String regex = "^(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]"+pomocny+","+pomocny+"[)]|LOOP[(]"+pomocny+","+pomocny+"[)])+$";
-        
-        
+
+        String pomocny = "(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]\\1,\\1[)]|LOOP[(],[)])+";
+        String regex = "^(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]" + pomocny + "," + pomocny + "[)]|LOOP[(]" + pomocny + "," + pomocny + "[)])+$";
+
+
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(vstupnytext);
-        
+
         if (match.find()) {
-            System.out.println(match.group());
-            System.out.println(pattern.toString());
             return true;
         } else {
-           throw new MyParserException( "chybny kod!");
+            throw new MyParserException("chybny kod!");
         }
 
     }
@@ -80,11 +92,11 @@ public class Inicializacia {
      * @param vsetky_premenne
      * @return
      */
-    public String vlozDoStavu(ArrayList<Character> vsetky_premenne) {
+    public String vlozDoStavu(List<String> vsetky_premenne) {
         Stav inicializacia = new Stav();
         Integer n = 0;
         while (vsetky_premenne.size() != n) {
-            inicializacia.vlozPremennu(vsetky_premenne.get(n).toString(), 4); // treba este vyriesit vlozenie hodnoty
+            inicializacia.vlozPremennu(vsetky_premenne.get(n), 4); // treba este vyriesit vlozenie hodnoty
             n++;
         }
         return null;

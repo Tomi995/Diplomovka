@@ -4,6 +4,9 @@
  */
 package emulatoras;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Tomi
@@ -13,28 +16,33 @@ public class EmulatorAS {
     /**
      * @param args the command line arguments
      */
-     public static void main(String[] args) throws MyParserException {
+    public static void main(String[] args) throws MyParserException {
         // TODO code application logic here
-        Inicializacia skuska = new Inicializacia();
-       // skuska.hladaj("fsfsd:Fetch-x:SUB:STore-y:add:store-xFetch- z");
-        // test
-         try {
-             System.out.println(skuska.iniciiuj("branch(add,add)"));
-         } catch (MyParserException e) {             
-         }
+        
+        if(1 == 8)
+            System.out.println("berie cisla");
+        
+        if("pokus"=="pos")
+            System.out.println("berie pismena");
+        
+/*
+              Inicializacia skuska = new Inicializacia();
+          skuska.hladaj("fsfsd:Fetch-x:SUB:STore-y:add:store-x:Fetch- z");
+         // test
          
-        /*   
-        Stav teest = new Stav();
          
-         teest.vlozPremennu("z", 3);
-         teest.vlozPremennu("y", 2);
-         teest.vlozPremennu("y", 6);
-         
-           teest.vlozPremennu("x", 4);
-           teest.vlozHodnotu("x", 8);
-           teest.vlozHodnotu("x", 200);
+        
        
-       System.out.println(teest.stavy.size());
+         
+         
+  */       
+        
+     /*    
+         teest.vlozPremennu("x", 4);
+         teest.vlozHodnotu("x", 8);
+         teest.vlozHodnotu("x", 200);
+       
+         System.out.println(teest.stavy.size());
          System.out.println(teest.vratHodnotu("x", 0));
        
          
@@ -46,18 +54,16 @@ public class EmulatorAS {
          System.out.println(teest.vratHodnotu("x", 2));
          
          */
-       //  System.out.println(teest.vratHodnotu("x",0));         
-       //  System.out.println(teest.vratHodnotu("y", 0));
-     
-    // Zasobnik zasobnik = Zasobnik.getZasobnik();
-    // zasobnik.vloz(4);
-    // zasobnik.vloz("true");
-     
-     
-     
-  //  System.out.println(zasobnik.jeCislo());   
-//     System.out.println(Integer.parseInt(zasobnik.vyber()));
-  //   System.out.println(Integer.parseInt(zasobnik.vyber()));
-    
-     }
+        //  System.out.println(teest.vratHodnotu("x",0));         
+        //  System.out.println(teest.vratHodnotu("y", 0));
+
+        
+
+        //  System.out.println(zasobnik.jeCislo());   
+        //     System.out.println(Integer.parseInt(zasobnik.vyber()));
+        //   System.out.println(Integer.parseInt(zasobnik.vyber()));
+
+
+
+    }
 }
