@@ -19,7 +19,7 @@ public class Add extends Instrukcia {
      * @author Tomi
      */
     @Override
-    void vykonaj() {
+    void vykonaj(String instrukcia) {
 
         int prveCislo = 0;
         int druheCislo = 0;

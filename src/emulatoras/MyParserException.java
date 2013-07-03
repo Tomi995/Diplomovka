@@ -13,5 +13,6 @@ public class MyParserException extends Exception{
     
     public MyParserException(String chyba){
         System.out.println(chyba);
+        System.exit(0);
     }
 }

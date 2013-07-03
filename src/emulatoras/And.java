@@ -8,36 +8,42 @@ package emulatoras;
  *
  * @author Tomi
  */
-public class Mult extends Instrukcia{
+public class And extends Instrukcia{
 
     @Override
     void vykonaj(String instrukcia) {
-         int prveCislo = 0;
-        int druheCislo = 0;
-        int vysledok;
+        String prvaHodnota;
+        String druhaHodnota;
+        String vysledok;
 
         try {
-            if (Zasobnik.getZasobnik().jeCislo()) {
-                prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
+            if (!Zasobnik.getZasobnik().jeCislo()) {
+                prvaHodnota = Zasobnik.getZasobnik().vyber();
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if (Zasobnik.getZasobnik().jeCislo()) {
-                druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
+            if (!Zasobnik.getZasobnik().jeCislo()) {
+                druhaHodnota = Zasobnik.getZasobnik().vyber();
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            vysledok = prveCislo * druheCislo;
+            if(prvaHodnota == "tt" && druhaHodnota == "tt") 
+            {vysledok = "TRUE";
+                    }
+            else
+            {vysledok = "FALSE";
+            }
+            
             Zasobnik.getZasobnik().vloz(vysledok);
         } catch (ZasobnikException ex) {
             System.out.println(ex);
-        }
-
+        }   
+    
     }
 
     @Override
     String regexp() {
-        return "MULT";
+        return "AND";
     }
 
     @Override

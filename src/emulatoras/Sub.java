@@ -11,7 +11,7 @@ package emulatoras;
 public class Sub extends Instrukcia{
 
     @Override
-    void vykonaj() {
+    void vykonaj(String instrukcia) {
      int prveCislo = 0;
         int druheCislo = 0;
         int vysledok;

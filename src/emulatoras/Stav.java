@@ -39,6 +39,7 @@ public class Stav {
            stavy.get(0).put(premenna, hodnota);
         }
         }
+        
     }
 
     /**
@@ -48,14 +49,11 @@ public class Stav {
      */
     public void vlozHodnotu(String premenna, Integer hodnota) {
         premenna = premenna.toUpperCase();
-        Hashtable<String, Integer> stav = (Hashtable) stavy.get(stavy.size()-1).clone() ;
+        Hashtable<String, Integer> stav = (Hashtable) stavy.get(stavy.size()-1).clone() ; //vytvorenie noveho stavu po zmene hodnoty 
         
         stav.put(premenna, hodnota);
         stavy.add(stav);
-       
-        
-        
-        
+           
 
     }
 
@@ -66,7 +64,7 @@ public class Stav {
      * @return
      */
     public Integer vratHodnotu(String premenna, Integer stav) {
-        premenna.toUpperCase();
+        premenna = premenna.toUpperCase();
         Hashtable<String, Integer> stavv = stavy.get(stav);
         return stavv.get(premenna);
     }

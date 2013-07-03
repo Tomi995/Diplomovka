@@ -8,19 +8,16 @@ package emulatoras;
  *
  * @author Tomi
  */
-public class False extends Instrukcia{
+public class EmptyOp extends Instrukcia{
 
     @Override
     void vykonaj(String instrukcia) {
-        try {
-            Zasobnik.getZasobnik().vloz("FALSE");
-        } catch (ZasobnikException ex) {
-            
-        }}
+    // prazdna operacia nic sa neudeje
+    }
 
     @Override
     String regexp() {
-        return "FALSE";
+   return "EMPTYOP";
     }
 
     @Override

@@ -8,13 +8,12 @@ package emulatoras;
  *
  * @author Tomi
  */
-public class Mult extends Instrukcia{
+public class Le extends Instrukcia {
 
     @Override
     void vykonaj(String instrukcia) {
-         int prveCislo = 0;
+        int prveCislo = 0;
         int druheCislo = 0;
-        int vysledok;
 
         try {
             if (Zasobnik.getZasobnik().jeCislo()) {
@@ -27,22 +26,24 @@ public class Mult extends Instrukcia{
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            vysledok = prveCislo * druheCislo;
-            Zasobnik.getZasobnik().vloz(vysledok);
+            if (prveCislo <= druheCislo) {
+                Zasobnik.getZasobnik().vloz("TRUE");
+            } else {
+                Zasobnik.getZasobnik().vloz("FALSE");
+            }
+
         } catch (ZasobnikException ex) {
             System.out.println(ex);
         }
-
     }
 
     @Override
     String regexp() {
-        return "MULT";
+        return "LE";
     }
 
     @Override
     Boolean platnost() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

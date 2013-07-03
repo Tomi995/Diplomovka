@@ -10,7 +10,7 @@ package emulatoras;
  */
 abstract public class Instrukcia {
 
-    abstract void vykonaj();
+    abstract void vykonaj(String instrukcia);
 
     abstract String regexp();
 

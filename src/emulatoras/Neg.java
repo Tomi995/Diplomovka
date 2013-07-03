@@ -11,25 +11,34 @@ import java.util.logging.Logger;
  *
  * @author Tomi
  */
-public class True extends Instrukcia{
+public class Neg extends Instrukcia {
+
+    String vysledok;
 
     @Override
-    void vykonaj(String instrukcia){
+    void vykonaj(String instrukcia) {
         try {
-            Zasobnik.getZasobnik().vloz("TRUE");
+            if (!Zasobnik.getZasobnik().jeCislo()) {
+                String hodnota = Zasobnik.getZasobnik().vyber();
+                if (hodnota == "tt") {
+                    vysledok = "ff";
+                } else {
+                    vysledok = "tt";
+                }
+            }
+            Zasobnik.getZasobnik().vloz(vysledok);
         } catch (ZasobnikException ex) {
-            
+            System.out.println(ex);
         }
     }
 
     @Override
     String regexp() {
-        return "TRUE";
+        return "NEG";
     }
 
     @Override
     Boolean platnost() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

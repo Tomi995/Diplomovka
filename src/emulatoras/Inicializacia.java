@@ -92,11 +92,11 @@ public class Inicializacia {
      * @param vsetky_premenne
      * @return
      */
-    public String vlozDoStavu(List<String> vsetky_premenne) {
+    public  String vlozDoStavu(List<String> vsetky_premenne) {
         Stav inicializacia = new Stav();
         Integer n = 0;
         while (vsetky_premenne.size() != n) {
-            inicializacia.vlozPremennu(vsetky_premenne.get(n), 4); // treba este vyriesit vlozenie hodnoty
+            inicializacia.vlozPremennu(vsetky_premenne.get(n), null); // treba este vyriesit vlozenie hodnoty
             n++;
         }
         return null;
