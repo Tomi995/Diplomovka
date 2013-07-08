@@ -12,11 +12,14 @@ import java.util.logging.Logger;
  * @author Tomi
  */
 public class True extends Instrukcia{
-
+/**
+ * vykonanie instrukcie TRUE
+ * @param instrukcia 
+ */
     @Override
     void vykonaj(String instrukcia){
         try {
-            Zasobnik.getZasobnik().vloz("TRUE");
+            Zasobnik.getZasobnik().vloz("TRUE");                                //vlozi do zasobnika hodnitu true
         } catch (ZasobnikException ex) {
             
         }
@@ -24,7 +27,7 @@ public class True extends Instrukcia{
 
     @Override
     String regexp() {
-        return "TRUE";
+        return "^TRUE$";
     }
 
     @Override

@@ -12,12 +12,12 @@ public class EmptyOp extends Instrukcia{
 
     @Override
     void vykonaj(String instrukcia) {
-    // prazdna operacia nic sa neudeje
+                                                                                  // prazdna operacia nic sa neudeje
     }
 
     @Override
     String regexp() {
-   return "EMPTYOP";
+   return "^EMPTYOP$";
     }
 
     @Override

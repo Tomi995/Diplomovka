@@ -35,10 +35,10 @@ public class Inicializacia {
     public String hladaj(String text) {
 
         String vstupnytext = text.toUpperCase();
-        List<String> vsetky_premenne = new ArrayList<>();         // vsetky premenne najdene na zaciatku
+        List<String> vsetky_premenne = new ArrayList<>();         // list do ktoreho sa ulozia vsetky premenne
 
 
-        Pattern pattern = Pattern.compile("(FETCH-|STORE-)([A-Z])+");
+        Pattern pattern = Pattern.compile("(FETCH-|STORE-)([A-Z])+");   //regex pre vyhladavanie
         Matcher match = pattern.matcher(vstupnytext);
 
         while (!match.hitEnd()) {
@@ -54,7 +54,7 @@ public class Inicializacia {
 
             }
         }
-        vlozDoStavu(vsetky_premenne);          // vlozenie vsetkych premennych do pociatocneho stavu 
+        
         System.out.println(vsetky_premenne);      //text na zmazanie
         return null;
     }

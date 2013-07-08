@@ -12,21 +12,21 @@ public class Le extends Instrukcia {
 
     @Override
     void vykonaj(String instrukcia) {
-        int prveCislo = 0;
-        int druheCislo = 0;
+        int prveCislo = 0;      //premenna pre prvu hodnotu cisla
+        int druheCislo = 0;     //premenna pre druhu hodnotu zasobnika
 
         try {
-            if (Zasobnik.getZasobnik().jeCislo()) {
+            if (Zasobnik.getZasobnik().jeCislo()) {                             //vyberie prve cislo zo zasobnika a vlozi ho do premennej
                 prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if (Zasobnik.getZasobnik().jeCislo()) {
+            if (Zasobnik.getZasobnik().jeCislo()) {                             //vyberie druhe cislo zo zasobnika a vlozi ho do premennej
                 druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if (prveCislo <= druheCislo) {
+            if (prveCislo <= druheCislo) {                                      //porovna cisla a vysledok vlozi do zasobnika
                 Zasobnik.getZasobnik().vloz("TRUE");
             } else {
                 Zasobnik.getZasobnik().vloz("FALSE");
@@ -39,7 +39,7 @@ public class Le extends Instrukcia {
 
     @Override
     String regexp() {
-        return "LE";
+        return "^LE$";
     }
 
     @Override

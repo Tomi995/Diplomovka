@@ -9,33 +9,36 @@ package emulatoras;
  * @author Tomi
  */
 public class And extends Instrukcia{
-
+/**
+ * vykonanie instrukcie AND
+ * @param instrukcia 
+ */
     @Override
     void vykonaj(String instrukcia) {
-        String prvaHodnota;
-        String druhaHodnota;
-        String vysledok;
+        String prvaHodnota;                             //premenna pre prvu hodnotu
+        String druhaHodnota;                            //premenna pre druhu hodnotu
+        String vysledok;                                //premenna pre vysledok
 
         try {
-            if (!Zasobnik.getZasobnik().jeCislo()) {
-                prvaHodnota = Zasobnik.getZasobnik().vyber();
+            if (!Zasobnik.getZasobnik().jeCislo()) {                            //overenie ci nie je prve cislo v zasobniku cislo
+                prvaHodnota = Zasobnik.getZasobnik().vyber();                   //priradenie hodnoty do premennej a vybratie zo zasobnika (deje sa v zasobniku)
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if (!Zasobnik.getZasobnik().jeCislo()) {
-                druhaHodnota = Zasobnik.getZasobnik().vyber();
+            if (!Zasobnik.getZasobnik().jeCislo()) {                            //overenie ci nie je druhe cislo v zasobniku cislo
+                druhaHodnota = Zasobnik.getZasobnik().vyber();                  //priradenie hodnoty do premennej a vybratie zo zasobnika (deje sa v zasobniku)
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if(prvaHodnota == "tt" && druhaHodnota == "tt") 
+            if("tt".equals(prvaHodnota) && "tt".equals(druhaHodnota))                     //vyhodnotenie 
             {vysledok = "TRUE";
                     }
             else
             {vysledok = "FALSE";
             }
             
-            Zasobnik.getZasobnik().vloz(vysledok);
-        } catch (ZasobnikException ex) {
+            Zasobnik.getZasobnik().vloz(vysledok);                              //vlozenie do zasobnika
+        } catch (ZasobnikException ex) {                                        //zachytenie exceptionu
             System.out.println(ex);
         }   
     
@@ -43,7 +46,7 @@ public class And extends Instrukcia{
 
     @Override
     String regexp() {
-        return "AND";
+        return "^AND$";
     }
 
     @Override

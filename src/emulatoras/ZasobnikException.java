@@ -15,7 +15,7 @@ public class ZasobnikException extends Exception {
 
     public ZasobnikException(String sprava) {
         System.out.println(sprava);
-        System.exit(0);
+              System.exit(0);                             //zastavenie programu ak nastane chyba, nema zmysel pokracovat
 
     }
 }

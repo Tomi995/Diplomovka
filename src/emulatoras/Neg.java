@@ -13,20 +13,19 @@ import java.util.logging.Logger;
  */
 public class Neg extends Instrukcia {
 
-    String vysledok;
-
     @Override
     void vykonaj(String instrukcia) {
-        try {
-            if (!Zasobnik.getZasobnik().jeCislo()) {
+        String vysledok = "";                                                   //premenna pre vysledok
+        try {                                                    
+            if (!Zasobnik.getZasobnik().jeCislo()) {                            //zisti ci hodnota v zasobniku nie jecislo a vlozi ju do premennej
                 String hodnota = Zasobnik.getZasobnik().vyber();
-                if (hodnota == "tt") {
-                    vysledok = "ff";
+                if (hodnota == "tt") {                                          //zisti aka je hodnota v premennej a vrati jej negaciu
+                    vysledok = "FALSE";
                 } else {
-                    vysledok = "tt";
+                    vysledok = "TRUE";
                 }
             }
-            Zasobnik.getZasobnik().vloz(vysledok);
+            Zasobnik.getZasobnik().vloz(vysledok);                              //vlozi vysledok do zasobnika
         } catch (ZasobnikException ex) {
             System.out.println(ex);
         }
@@ -34,7 +33,7 @@ public class Neg extends Instrukcia {
 
     @Override
     String regexp() {
-        return "NEG";
+        return "^NEG$";
     }
 
     @Override

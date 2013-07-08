@@ -10,7 +10,7 @@ package emulatoras;
  */
 public class EmulatorFrame extends javax.swing.JFrame {
 private Inicializacia skuska ;     //vlozeny kod
-    
+private Parser parser;    
     
     
     /**
@@ -19,6 +19,7 @@ private Inicializacia skuska ;     //vlozeny kod
     public EmulatorFrame() {
         initComponents();
         skuska = new Inicializacia();     //vlozeny kod
+        
     }
 
     /**
@@ -33,6 +34,7 @@ private Inicializacia skuska ;     //vlozeny kod
         jScrollPane1 = new javax.swing.JScrollPane();
         kod = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,13 +49,23 @@ private Inicializacia skuska ;     //vlozeny kod
             }
         });
 
+        jButton2.setText("jButton2");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton2MouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -65,7 +77,9 @@ private Inicializacia skuska ;     //vlozeny kod
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
@@ -76,6 +90,11 @@ private Inicializacia skuska ;     //vlozeny kod
    skuska.hladaj(kod.getText());
         
     }//GEN-LAST:event_jButton1MouseReleased
+
+    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+        parser = new Parser();
+        parser.parse(kod.getText());
+    }//GEN-LAST:event_jButton2MouseReleased
 
     /**
      * @param args the command line arguments
@@ -113,6 +132,7 @@ private Inicializacia skuska ;     //vlozeny kod
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea kod;
     // End of variables declaration//GEN-END:variables

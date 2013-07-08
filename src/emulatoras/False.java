@@ -13,14 +13,14 @@ public class False extends Instrukcia{
     @Override
     void vykonaj(String instrukcia) {
         try {
-            Zasobnik.getZasobnik().vloz("FALSE");
+            Zasobnik.getZasobnik().vloz("FALSE");                               //vlozenie hodnoty do zasobnika
         } catch (ZasobnikException ex) {
             
         }}
 
     @Override
     String regexp() {
-        return "FALSE";
+        return "^FALSE$";
     }
 
     @Override

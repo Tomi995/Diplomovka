@@ -9,25 +9,28 @@ package emulatoras;
  * @author Tomi
  */
 public class Sub extends Instrukcia{
-
+/**
+ * vykonanie instrukcie SUB
+ * @param instrukcia 
+ */
     @Override
     void vykonaj(String instrukcia) {
-     int prveCislo = 0;
-        int druheCislo = 0;
-        int vysledok;
+     int prveCislo = 0;                                                         //premenna pre prve cislo
+        int druheCislo = 0;                                                     //premenna pre druhe cislo
+        int vysledok;                                                           //premenna pre vysledok
 
         try {
-            if (Zasobnik.getZasobnik().jeCislo()) {
+            if (Zasobnik.getZasobnik().jeCislo()) {                             //zisti ci je cislo v zasobniku cislo, vyberie ho a vlozi do premennej
                 prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            if (Zasobnik.getZasobnik().jeCislo()) {
+            if (Zasobnik.getZasobnik().jeCislo()) {                             //zisti ci ej druhe cislo v zasobniku cislo,vyberie ho a vlozi do premennej
                 druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
             } else {
                 throw new ZasobnikException("Zla hodnota v zasobniku");
             }
-            vysledok = prveCislo - druheCislo;
+            vysledok = prveCislo - druheCislo;                                  //vypocita a vysledok vlozi do zasobnika
             Zasobnik.getZasobnik().vloz(vysledok);
         } catch (ZasobnikException ex) {
             System.out.println(ex);
@@ -37,7 +40,7 @@ public class Sub extends Instrukcia{
 
     @Override
     String regexp() {
-        return "SUB";
+        return "^SUB$";
     }
 
     @Override

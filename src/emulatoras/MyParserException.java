@@ -13,6 +13,6 @@ public class MyParserException extends Exception{
     
     public MyParserException(String chyba){
         System.out.println(chyba);
-        System.exit(0);
+        System.exit(0);                         //v pripade chyby sa cely program zastavi, nema zmysel aby pokracoval
     }
 }
