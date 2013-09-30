@@ -36,8 +36,8 @@ public class EmulatorAS {
       fetch.vykonaj("FETCH-X");
       add.vykonaj("ADD");
         
-     //   stav.vlozPremennu("Y", null);
-       
+        
+     
        // fetch.vykonaj("FETCH-Ycdc");
         //fetch.vykonaj("FETCH-Yxc");
 

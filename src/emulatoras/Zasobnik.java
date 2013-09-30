@@ -100,4 +100,8 @@ public class Zasobnik {
         }
 
     }
+    
+    public void vymaz(){
+    zasobnik.clear();
+    }
 }

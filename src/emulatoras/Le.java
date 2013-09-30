@@ -42,8 +42,9 @@ public class Le extends Instrukcia {
         return "^LE$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+return "^LE$";
     }
 }

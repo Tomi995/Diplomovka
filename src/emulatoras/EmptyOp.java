@@ -20,9 +20,11 @@ public class EmptyOp extends Instrukcia{
    return "^EMPTYOP$";
     }
 
+ 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+    return "^EMPTYOP$";
     }
     
 }

@@ -36,8 +36,9 @@ public class Neg extends Instrukcia {
         return "^NEG$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+    return "^NEG$"; 
     }
 }

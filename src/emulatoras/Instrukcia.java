@@ -21,5 +21,5 @@ abstract public class Instrukcia {
  */
     abstract String regexp();
 
-    abstract Boolean platnost(); //v povodnom plane sluzilo na zistenie platnosti, asi to uz nevyuzije po zmene navrhu ale este to tu nechavam zmazem az na koniec
+    abstract String platnost(); //v povodnom plane sluzilo na zistenie platnosti, asi to uz nevyuzije po zmene navrhu ale este to tu nechavam zmazem az na koniec
 }

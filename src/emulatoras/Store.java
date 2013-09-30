@@ -50,9 +50,10 @@ public class Store extends Instrukcia{
     return "^STORE-(([A-Z])+)$";
     }
 
+ 
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    String platnost() {
+   return "^STORE-(([A-Z])+)$";
+     }
     
 }

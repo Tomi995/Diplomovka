@@ -46,7 +46,7 @@ public class Mult extends Instrukcia {
     }
 
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+        return "^MULT$";
     }
 }

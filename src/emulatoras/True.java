@@ -30,9 +30,10 @@ public class True extends Instrukcia{
         return "^TRUE$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+        return "^TRUE$";
     }
     
 }

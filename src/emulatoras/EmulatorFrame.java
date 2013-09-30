@@ -4,6 +4,9 @@
  */
 package emulatoras;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Tomi
@@ -87,7 +90,15 @@ private Parser parser;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-   skuska.hladaj(kod.getText());
+    try {
+       // Zasobnik.getZasobnik().vymaz();
+        skuska.iniciuj(kod.getText());
+        System.out.println(Zasobnik.getZasobnik().vyber()); //vypis zo zasobnika
+    } catch (MyParserException ex) {
+        Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ZasobnikException ex) {
+        Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
     }//GEN-LAST:event_jButton1MouseReleased
 

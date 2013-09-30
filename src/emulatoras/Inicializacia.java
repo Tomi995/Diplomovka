@@ -15,11 +15,31 @@ import java.util.regex.Pattern;
  */
 public class Inicializacia {
 
-    public String iniciiuj(String text) throws MyParserException {
+    private List<Instrukcia> instrukcie = new ArrayList<Instrukcia>();
 
-        if (kontrola(text)) {                                   // pe vyhladanie syntaktickych chyb....bude treba funkciu ako v parsery
+    public Inicializacia() {
+        instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
+        instrukcie.add(new And());
+        instrukcie.add(new Cond());
+        instrukcie.add(new EmptyOp());
+        instrukcie.add(new Eq());
+        instrukcie.add(new False());
+        instrukcie.add(new Fetch());
+        instrukcie.add(new Le());
+        instrukcie.add(new Mult());
+        instrukcie.add(new Neg());
+        instrukcie.add(new Push());
+        instrukcie.add(new Store());
+        instrukcie.add(new Sub());
+        instrukcie.add(new True());
+        instrukcie.add(new Loop());
+    }
+
+    public String iniciuj(String text) throws MyParserException {
+
+        if (kontrola(text)) {
             hladaj(text);
-            System.out.println("preslo parserom");             //text na zmazanie
+            System.out.println("preslo parserom");
         }
         return null;
 
@@ -38,23 +58,22 @@ public class Inicializacia {
         List<String> vsetky_premenne = new ArrayList<>();         // list do ktoreho sa ulozia vsetky premenne
 
 
-        Pattern pattern = Pattern.compile("(FETCH-|STORE-)([A-Z])+");   //regex pre vyhladavanie
+        Pattern pattern = Pattern.compile("(FETCH-|STORE-)(([A-Z])+)");   //regex pre vyhladavanie
         Matcher match = pattern.matcher(vstupnytext);
 
         while (!match.hitEnd()) {
             if (match.find()) {
 
-                int index = 6;
-                String premenna = "";
-                while (index != match.group().length()) {
-                    premenna = premenna + match.group().charAt(index);              // vlozenie slovnej premenne nie iba pismenko
-                    index++;
+
+                String premenna = match.group(2);
+
+                if (!vsetky_premenne.contains(premenna)) {
+                    vsetky_premenne.add(premenna);
                 }
-                vsetky_premenne.add(premenna);
 
             }
         }
-        
+
         System.out.println(vsetky_premenne);      //text na zmazanie
         return null;
     }
@@ -66,40 +85,115 @@ public class Inicializacia {
      * @return
      * @throws MyParserException
      */
-    public Boolean kontrola(String text) throws MyParserException {        
-        String vstupnytext = text.toUpperCase();                                // bude treba celu prerobit kedze nekurzija nefunguje
+    public Boolean kontrola(String kod) throws MyParserException {
+        kod = kod.replaceAll("\\s", "");          //nahradi vsetky biele miesta
+        kod = kod.toUpperCase();                 //zmeni male pismena na velke
 
-        Integer index = 0;
+        String prikaz = "";                     //prikaz na spracovanie
+        char c = ' ';                           //nacitany znak kodu
+        int index = 0;                          //aktualny index znaku v kode
+        int lavaZatvorka = 0;                   //pocet lavych zatvoriek
+        int pravaZatvorka = 0;                  //pocet pravych zatvoriek
 
-        String pomocny = "(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]\\1,\\1[)]|LOOP[(],[)])+";
-        String regex = "^(ADD|MULT|SUB|TRUE|FALSE|EQ|LE|AND|NEG|EMPTYOP|PUSH-(-|[+])*[0-9]+|(FETCH-|STORE-[A-Z]+)|BRANCH[(]" + pomocny + "," + pomocny + "[)]|LOOP[(]" + pomocny + "," + pomocny + "[)])+$";
+        try {
+            while (!kod.isEmpty()) {                    //cyklus na prejdenie celeho kodu
+                if (index < kod.length()) {             // osetrenie ukoncenia kodu, je to bez : treba zabezpecit ukoncenie cyklu a vykonanie
+                    c = kod.charAt(index);
+                    if (c == ':') {                     //nacitanie : znamena vykonanie prikazu
+                        skontroluj(prikaz);
+                        prikaz = "";
+                        index++;
+                    } else {
+                        if (c == '(') {                 //nacitanie ( spusti cyklus na nacitanie parametra medzi ()
+                            prikaz = prikaz + c;
+                            lavaZatvorka++;
+                            index++;
+                            try {
+                                while (lavaZatvorka != pravaZatvorka) {             //cyklus nacitania parametra medzi zatvorkami, pocet lavych a pravych zatvoriek musi sediet v opacnom pripade exception
+                                    c = kod.charAt(index);
 
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher match = pattern.matcher(vstupnytext);
-
-        if (match.find()) {
-            return true;
-        } else {
-            throw new MyParserException("chybny kod!");
+                                    if (c == '(') {                             //pripocitanie lavej zatvorky
+                                        lavaZatvorka++;
+                                        prikaz = prikaz + c;
+                                        index++;
+                                    } else {
+                                        if (c == ')') {                         //pripocitanie pravej zatvorky
+                                            pravaZatvorka++;
+                                            prikaz = prikaz + c;
+                                            index++;
+                                        } else {                                 // ak sa nacita znak
+                                            prikaz = prikaz + c;
+                                            index++;
+                                        }
+                                    }
+                                }
+                            } catch (Exception e) {                               //exception ak su zle zadane zatvorky
+                                throw new MyParserException("Zle ozatvorkovane :" + prikaz);
+                            }
+                        } else {                                                 //nacitanie znaku kodu a pridanie do prikazu
+                            prikaz = prikaz + c;
+                            index++;
+                        }
+                    }
+                } else {                                                         //vykonanie posledneho prikazu kodu
+                    skontroluj(prikaz);
+                    break;
+                }
+            }
+        } catch (MyParserException e) {                                             //zachytenie exceptionu 
+            return false;
         }
+        return true;
 
     }
 
     /**
      * list premennych vlozi do stavu nula a priradi im pociatocne hodnoty
      *
-     * @param vsetky_premenne
+     * @param vsetkypremenne
      * @return
      */
-    public  String vlozDoStavu(List<String> vsetky_premenne) {
+    public void vlozDoStavu(List<String> vsetky_premenne) {
         Stav inicializacia = new Stav();
         Integer n = 0;
         while (vsetky_premenne.size() != n) {
             inicializacia.vlozPremennu(vsetky_premenne.get(n), null); // treba este vyriesit vlozenie hodnoty
             n++;
         }
-        return null;
+
+
+    }
+
+    /**
+     * syntakticky test
+     *
+     * @param prikaz
+     * @throws MyParserException
+     */
+    private void skontroluj(String prikaz) throws MyParserException {
+
+        prikaz = prikaz.toUpperCase();                              //potrebujem dorobit......
+        prikaz = prikaz.replaceAll("\\s", "");
+        Boolean skontrolovane = false;                                              //premenna ci sa dany prikaz vykona
+
+        for (Instrukcia instr : instrukcie) {
+            Pattern pattern = Pattern.compile(instr.regexp());                            //pattern pre regex
+            Matcher match = pattern.matcher(prikaz);
+
+            if (match.find()) {
+                if (instr.regexp().startsWith("^COND") || instr.regexp().startsWith("^LOOP")) {
+                    if (!(kontrola(match.group(1)) && kontrola(match.group(2)))) {
+                        throw new MyParserException("chyba v prikaze");
+                    }
+                }
+
+                System.out.println("kontrola  " + prikaz);
+                skontrolovane = true;
+            }
+        }
+        if (!skontrolovane) {
+            throw new MyParserException("Syntakticka chyba : " + prikaz);
+        }
 
     }
 }

@@ -114,6 +114,7 @@ public class Parser {
             if (match.find()) {
 
                 instr.vykonaj(prikaz);
+                System.out.println("vykonanie  "+prikaz);
                 vykonanie = true;
             }
 

@@ -43,9 +43,10 @@ public class Sub extends Instrukcia{
         return "^SUB$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+       return "^SUB$";
     }
     
 }

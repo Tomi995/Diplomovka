@@ -68,8 +68,9 @@ public class Push extends Instrukcia {
         return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    String platnost() {
+         return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
+   }
 }

@@ -49,8 +49,9 @@ public class Fetch extends Instrukcia {
         return "^FETCH-(([A-Z])+)$";
     }
 
+
     @Override
-    Boolean platnost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String platnost() {
+    return "^FETCH-(([A-Z])+)$";
     }
 }
