@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +16,7 @@ import java.util.regex.Pattern;
 public class Loop extends Instrukcia {
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         System.out.println(instrukcia);
         Parser parser = new Parser();
 
@@ -37,12 +39,12 @@ public class Loop extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^LOOP[(](.*),(.*)[)]$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
    return "^LOOP[(](.*),(.*)[)]$"; }
 }

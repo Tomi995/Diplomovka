@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +17,7 @@ import java.util.logging.Logger;
 public class Neg extends Instrukcia {
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         String vysledok = "";                                                   //premenna pre vysledok
         try {                                                    
             if (!Zasobnik.getZasobnik().jeCislo()) {                            //zisti ci hodnota v zasobniku nie jecislo a vlozi ju do premennej
@@ -32,13 +35,13 @@ public class Neg extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^NEG$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^NEG$"; 
     }
 }

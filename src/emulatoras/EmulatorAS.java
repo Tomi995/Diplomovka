@@ -4,6 +4,11 @@
  */
 package emulatoras;
 
+import sk.tuke.emulatoras.instrukcia.Push;
+import sk.tuke.emulatoras.instrukcia.Cond;
+import sk.tuke.emulatoras.instrukcia.Store;
+import sk.tuke.emulatoras.instrukcia.Fetch;
+import sk.tuke.emulatoras.instrukcia.Add;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

@@ -2,8 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Parser;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +18,7 @@ import java.util.regex.Pattern;
 public class Cond extends Instrukcia {
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
 
         Parser parser = new Parser();                                              //vytvorenie parsera
 
@@ -47,14 +51,14 @@ public class Cond extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^COND[(](.*),(.*)[)]$";
     }
 
  
 
     @Override
-    String platnost() {
+    public String platnost() {
 
              return "^COND[(](.*),(.*)[)]$";
    

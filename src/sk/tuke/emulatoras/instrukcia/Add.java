@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +22,7 @@ public class Add extends Instrukcia {
      * @author Tomi
      */
     @Override
-    void vykonaj(String instrukcia) {
+   public void vykonaj(String instrukcia) {
 
         int prveCislo = 0;          //premenna pre prve cislo zo zasobnika
         int druheCislo = 0;            //premenna pre druhe cislo zo zasobnika
@@ -50,13 +53,13 @@ public class Add extends Instrukcia {
      * @author Tomi
      */
     @Override
-    String regexp() {
+    public String regexp() {
         return "^ADD$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^ADD$";
     }
 }

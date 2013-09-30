@@ -2,8 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -21,7 +25,7 @@ public class Push extends Instrukcia {
      * @param instrukcia
      */
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         int index = 0;                                                          //premenna pre index v pocte znamienok
         int pocetMinus = 0;                                                     //pocet minusov pred vyrazom 
         int hodnota;                                                            //vysledok
@@ -64,13 +68,13 @@ public class Push extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
          return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
    }
 }

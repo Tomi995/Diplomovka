@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
+
+import emulatoras.Instrukcia;
 
 /**
  *
@@ -11,19 +13,19 @@ package emulatoras;
 public class EmptyOp extends Instrukcia{
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
                                                                                   // prazdna operacia nic sa neudeje
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
    return "^EMPTYOP$";
     }
 
  
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^EMPTYOP$";
     }
     

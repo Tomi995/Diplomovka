@@ -2,8 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
+import emulatoras.Stav;
+import emulatoras.StavException;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -16,7 +22,7 @@ import java.util.regex.Pattern;
 public class Fetch extends Instrukcia {
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         String premenna;
 
         instrukcia = instrukcia.replaceAll("\\s", "");
@@ -45,13 +51,13 @@ public class Fetch extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^FETCH-(([A-Z])+)$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^FETCH-(([A-Z])+)$";
     }
 }

@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +17,7 @@ import java.util.logging.Logger;
 public class Eq extends Instrukcia {
 
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         Boolean prveJeCislo = false;                                            //premenna na urcenie ci je prve cislo v zasobniku cislo alebo Bool hodnota
         Boolean druheJeCislo = false;                                           //premenna na urcenie ci je druhe cislo v zasobniku cislo alebo Bool hodnota
 
@@ -51,13 +54,13 @@ public class Eq extends Instrukcia {
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^EQ$";
     }
 
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^EQ$";
     }
 }

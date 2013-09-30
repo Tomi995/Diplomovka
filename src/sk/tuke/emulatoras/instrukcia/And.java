@@ -2,7 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
+
+import emulatoras.Instrukcia;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 
 /**
  *
@@ -14,7 +18,7 @@ public class And extends Instrukcia{
  * @param instrukcia 
  */
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         String prvaHodnota;                             //premenna pre prvu hodnotu
         String druhaHodnota;                            //premenna pre druhu hodnotu
         String vysledok;                                //premenna pre vysledok
@@ -45,12 +49,12 @@ public class And extends Instrukcia{
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
         return "^AND$";
     }
 
     @Override
-    String platnost() {
+    public String platnost() {
     return "^AND$";
     }
 

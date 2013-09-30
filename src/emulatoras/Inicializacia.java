@@ -4,6 +4,21 @@
  */
 package emulatoras;
 
+import sk.tuke.emulatoras.instrukcia.Push;
+import sk.tuke.emulatoras.instrukcia.Sub;
+import sk.tuke.emulatoras.instrukcia.Cond;
+import sk.tuke.emulatoras.instrukcia.Mult;
+import sk.tuke.emulatoras.instrukcia.Store;
+import sk.tuke.emulatoras.instrukcia.False;
+import sk.tuke.emulatoras.instrukcia.EmptyOp;
+import sk.tuke.emulatoras.instrukcia.Eq;
+import sk.tuke.emulatoras.instrukcia.Fetch;
+import sk.tuke.emulatoras.instrukcia.Loop;
+import sk.tuke.emulatoras.instrukcia.Neg;
+import sk.tuke.emulatoras.instrukcia.True;
+import sk.tuke.emulatoras.instrukcia.And;
+import sk.tuke.emulatoras.instrukcia.Le;
+import sk.tuke.emulatoras.instrukcia.Add;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

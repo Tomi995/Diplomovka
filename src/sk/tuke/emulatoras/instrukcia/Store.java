@@ -2,8 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package emulatoras;
+package sk.tuke.emulatoras.instrukcia;
 
+import emulatoras.Instrukcia;
+import emulatoras.Stav;
+import emulatoras.StavException;
+import emulatoras.Zasobnik;
+import emulatoras.ZasobnikException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -16,7 +21,7 @@ import java.util.regex.Pattern;
 public class Store extends Instrukcia{
     Stav stav = new Stav();
     @Override
-    void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) {
         String premenna;
         int hodnota;
         
@@ -46,13 +51,13 @@ public class Store extends Instrukcia{
     }
 
     @Override
-    String regexp() {
+    public String regexp() {
     return "^STORE-(([A-Z])+)$";
     }
 
  
     @Override
-    String platnost() {
+    public String platnost() {
    return "^STORE-(([A-Z])+)$";
      }
     
