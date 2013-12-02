@@ -11,12 +11,13 @@ import java.util.logging.Logger;
  *
  * @author Tomi
  */
-public class StavException extends Exception{
-    public StavException(){}
-    public StavException(String sprava){
-        System.out.println(sprava);
-        
-        System.exit(0);
+public class StavException extends MyParserException {
+
+    public StavException() {
     }
 
+    public StavException(String sprava) {
+        message = sprava;
+        System.out.println("Stav exception: " + sprava);
+    }
 }

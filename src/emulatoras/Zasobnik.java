@@ -52,15 +52,15 @@ public class Zasobnik {
      *
      * @param cislo
      */
-    public void vloz(Integer cislo) throws ZasobnikException {                                     
-       try{
-        
-           zasobnik.add(cislo.toString());                     //zmeni cislo na string a vlozi ho do zasobnika
-       
-       }catch( NullPointerException ex){
-       throw new ZasobnikException("Premenna neexistuje");
-       }
-       }
+    public void vloz(Integer cislo) throws ZasobnikException {
+        try {
+
+            zasobnik.add(cislo.toString());                     //zmeni cislo na string a vlozi ho do zasobnika
+
+        } catch (NullPointerException ex) {
+            throw new ZasobnikException("Premenna neexistuje");
+        }
+    }
 
     /**
      * vlozi do zasobnika hodnotu true a false
@@ -68,7 +68,7 @@ public class Zasobnik {
      * @param text
      */
     public void vloz(String text) throws ZasobnikException {
-        text = text.toUpperCase();                  
+        text = text.toUpperCase();
         if (text.equals("TRUE")) {                  //zisti ci je vlozena hodnota true a ak ano vlozi do zasobnika tt
             zasobnik.add("tt");
         } else if (text.equals("FALSE")) {          //zisti ci je vlozena hodnota false a ak ano vlozi do zasobnika ff
@@ -100,8 +100,8 @@ public class Zasobnik {
         }
 
     }
-    
-    public void vymaz(){
-    zasobnik.clear();
+
+    public void vymaz() {
+        zasobnik.clear();
     }
 }

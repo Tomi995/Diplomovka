@@ -20,7 +20,7 @@ import sk.tuke.emulatoras.instrukcia.And;
 import sk.tuke.emulatoras.instrukcia.Le;
 import sk.tuke.emulatoras.instrukcia.Add;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +53,8 @@ public class Parser {
         instrukcie.add(new Loop());
     }
 
-    public void parse(String kod) {
+    public void parse(String kod) throws MyParserException {
+
         kod = kod.replaceAll("\\s", "");          //nahradi vsetky biele miesta
         kod = kod.toUpperCase();                 //zmeni male pismena na velke
 
@@ -63,61 +64,53 @@ public class Parser {
         int lavaZatvorka = 0;                   //pocet lavych zatvoriek
         int pravaZatvorka = 0;                  //pocet pravych zatvoriek
 
-
-
-        try {
-            while (!kod.isEmpty()) {                    //cyklus na prejdenie celeho kodu
-                if (index < kod.length()) {             // osetrenie ukoncenia kodu, je to bez : treba zabezpecit ukoncenie cyklu a vykonanie
-                    c = kod.charAt(index);
-                    if (c == ':') {                     //nacitanie : znamena vykonanie prikazu
-                        vykonaj(prikaz);
-                        prikaz = "";
+        while (!kod.isEmpty()) {                    //cyklus na prejdenie celeho kodu
+            if (index < kod.length()) {             // osetrenie ukoncenia kodu, je to bez : treba zabezpecit ukoncenie cyklu a vykonanie
+                c = kod.charAt(index);
+                if (c == ':') {                     //nacitanie : znamena vykonanie prikazu
+                    vykonaj(prikaz);
+                    prikaz = "";
+                    index++;
+                } else {
+                    if (c == '(') {                 //nacitanie ( spusti cyklus na nacitanie parametra medzi ()
+                        prikaz = prikaz + c;
+                        lavaZatvorka++;
                         index++;
-                    } else {
-                        if (c == '(') {                 //nacitanie ( spusti cyklus na nacitanie parametra medzi ()
-                            prikaz = prikaz + c;
-                            lavaZatvorka++;
-                            index++;
-                            try {
-                                while (lavaZatvorka != pravaZatvorka) {             //cyklus nacitania parametra medzi zatvorkami, pocet lavych a pravych zatvoriek musi sediet v opacnom pripade exception
-                                    c = kod.charAt(index);
+                        try {
+                            while (lavaZatvorka != pravaZatvorka) {             //cyklus nacitania parametra medzi zatvorkami, pocet lavych a pravych zatvoriek musi sediet v opacnom pripade exception
+                                c = kod.charAt(index);
 
-                                    if (c == '(') {                             //pripocitanie lavej zatvorky
-                                        lavaZatvorka++;
+                                if (c == '(') {                             //pripocitanie lavej zatvorky
+                                    lavaZatvorka++;
+                                    prikaz = prikaz + c;
+                                    index++;
+                                } else {
+                                    if (c == ')') {                         //pripocitanie pravej zatvorky
+                                        pravaZatvorka++;
                                         prikaz = prikaz + c;
                                         index++;
-                                    } else {
-                                        if (c == ')') {                         //pripocitanie pravej zatvorky
-                                            pravaZatvorka++;
-                                            prikaz = prikaz + c;
-                                            index++;
-                                        } else {                                 // ak sa nacita znak
-                                            prikaz = prikaz + c;
-                                            index++;
-                                        }
+                                    } else {                                 // ak sa nacita znak
+                                        prikaz = prikaz + c;
+                                        index++;
                                     }
                                 }
-                            } catch (Exception e) {                               //exception ak su zle zadane zatvorky
-                                throw new MyParserException("Zle ozatvorkovane :" + prikaz);
                             }
-                        } else {                                                 //nacitanie znaku kodu a pridanie do prikazu
-                            prikaz = prikaz + c;
-                            index++;
+                        } catch (Exception e) {                               //exception ak su zle zadane zatvorky
+                            throw new MyParserException("Zle ozatvorkovane :" + prikaz);
                         }
+                    } else {                                                 //nacitanie znaku kodu a pridanie do prikazu
+                        prikaz = prikaz + c;
+                        index++;
                     }
-                } else {                                                         //vykonanie posledneho prikazu kodu
-
-                    vykonaj(prikaz);
-
-                    break;
                 }
+            } else {                                                         //vykonanie posledneho prikazu kodu
+                vykonaj(prikaz);
+                break;
             }
-        } catch (MyParserException e) {                                          //zachytenie exceptionu 
         }
-
     }
 
-    public void vykonaj(String prikaz) {                            //vykonanie prikazu
+    public void vykonaj(String prikaz) throws MyParserException {                            //vykonanie prikazu
         prikaz = prikaz.toUpperCase();                              //potrebujem dorobit......
         prikaz = prikaz.replaceAll("\\s", "");
         Boolean vykonanie = false;                                              //premenna ci sa dany prikaz vykona
@@ -127,13 +120,12 @@ public class Parser {
             Matcher match = pattern.matcher(prikaz);
 
             if (match.find()) {
-                System.out.println("vykonanie  "+prikaz);
+                log(prikaz);
+                // tu sa prikaz vykona
+                System.out.println("vykonanie  " + prikaz);
                 instr.vykonaj(prikaz);
-                
                 vykonanie = true;
             }
-
-
         }
         if (vykonanie) {
         } else {
@@ -143,11 +135,41 @@ public class Parser {
             } else {
                 System.out.println("chybny kod");
             }
-
         }
     }
-}
 
+    public void log(String prikaz) {
+        // ulozime si data PO
+        Vykonavanie vykonavanie = Vykonavanie.getInstance();
+        Zasobnik z = Zasobnik.getZasobnik();
+        Stav s = new Stav();
+        int i;
+
+        String[] zasobnik_po = {"Prázdny zásobník"};
+        if (!z.zasobnik.isEmpty()) {
+            zasobnik_po = new String[z.zasobnik.size()];
+            i = 0;
+            for (String zasobnik : z.zasobnik) {
+                zasobnik_po[i++] = zasobnik;
+            }
+        }
+
+        int stav_po = s.stavy.size();
+
+        String[] premenne_po = {"Žiadne premenné"};
+
+        if (stav_po > 0) {
+            Hashtable<String, Integer> premenne = s.stavy.get(stav_po - 1);
+            premenne_po = new String[premenne.size()];
+            i = 0;
+            for (String key : premenne.keySet()) {
+                premenne_po[i++] = key + " |-> " + premenne.get(key);
+            }
+        }
+
+        vykonavanie.addKrok(prikaz, stav_po, premenne_po, zasobnik_po);
+    }
+}
 
 /*
  * 

@@ -5,28 +5,26 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 
 /**
  *
  * @author Tomi
  */
-public class EmptyOp extends Instrukcia{
+public class EmptyOp extends Instrukcia {
 
     @Override
-    public void vykonaj(String instrukcia) {
-                                                                                  // prazdna operacia nic sa neudeje
+    public void vykonaj(String instrukcia) throws MyParserException {
+        // prazdna operacia nic sa neudeje
     }
 
     @Override
     public String regexp() {
-   return "^EMPTYOP$";
+        return "^EMPTYOP$";
     }
-
- 
 
     @Override
     public String platnost() {
-    return "^EMPTYOP$";
+        return "^EMPTYOP$";
     }
-    
 }

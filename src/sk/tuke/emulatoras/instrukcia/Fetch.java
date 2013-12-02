@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class Fetch extends Instrukcia {
 
     @Override
-    public void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) throws MyParserException {
         String premenna;
 
         instrukcia = instrukcia.replaceAll("\\s", "");
@@ -33,19 +33,11 @@ public class Fetch extends Instrukcia {
 
         if (match.find()) {
             premenna = match.group(1);                                  //zistenie premennej
-           
-            Stav stav = new Stav();
-            try {
-                Zasobnik.getZasobnik().vloz(stav.vratHodnotu(premenna));            //vyberie zo stavu hodnotu premennej a vlozi do zasobnika
 
-            } catch (StavException  | ZasobnikException ex)  {
-            }
+            Stav stav = new Stav();
+            Zasobnik.getZasobnik().vloz(stav.vratHodnotu(premenna));            //vyberie zo stavu hodnotu premennej a vlozi do zasobnika
         } else {
-            try {
-                throw new MyParserException("Chybny prikaz " + instrukcia);
-            } catch (MyParserException ex) {
-                Logger.getLogger(Fetch.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            throw new MyParserException("Chybny prikaz " + instrukcia);
         }
 
     }
@@ -55,9 +47,8 @@ public class Fetch extends Instrukcia {
         return "^FETCH-(([A-Z])+)$";
     }
 
-
     @Override
     public String platnost() {
-    return "^FETCH-(([A-Z])+)$";
+        return "^FETCH-(([A-Z])+)$";
     }
 }

@@ -5,6 +5,7 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
 import java.util.logging.Level;
@@ -17,21 +18,17 @@ import java.util.logging.Logger;
 public class Neg extends Instrukcia {
 
     @Override
-    public void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) throws MyParserException {
         String vysledok = "";                                                   //premenna pre vysledok
-        try {                                                    
-            if (!Zasobnik.getZasobnik().jeCislo()) {                            //zisti ci hodnota v zasobniku nie jecislo a vlozi ju do premennej
-                String hodnota = Zasobnik.getZasobnik().vyber();
-                if (hodnota == "tt") {                                          //zisti aka je hodnota v premennej a vrati jej negaciu
-                    vysledok = "FALSE";
-                } else {
-                    vysledok = "TRUE";
-                }
+        if (!Zasobnik.getZasobnik().jeCislo()) {                            //zisti ci hodnota v zasobniku nie jecislo a vlozi ju do premennej
+            String hodnota = Zasobnik.getZasobnik().vyber();
+            if (hodnota == "tt") {                                          //zisti aka je hodnota v premennej a vrati jej negaciu
+                vysledok = "FALSE";
+            } else {
+                vysledok = "TRUE";
             }
-            Zasobnik.getZasobnik().vloz(vysledok);                              //vlozi vysledok do zasobnika
-        } catch (ZasobnikException ex) {
-            System.out.println(ex);
         }
+        Zasobnik.getZasobnik().vloz(vysledok);                              //vlozi vysledok do zasobnika
     }
 
     @Override
@@ -39,9 +36,8 @@ public class Neg extends Instrukcia {
         return "^NEG$";
     }
 
-
     @Override
     public String platnost() {
-    return "^NEG$"; 
+        return "^NEG$";
     }
 }

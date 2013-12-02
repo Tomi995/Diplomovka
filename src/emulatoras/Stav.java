@@ -17,7 +17,11 @@ import javax.swing.text.DefaultEditorKit;
 public class Stav {
 
     //hashtable pre premennu a jej hodnotu- stav
-    static final List<Hashtable> stavy = new ArrayList<Hashtable>();                  //List vsetkych stavov 
+    public static final List<Hashtable> stavy = new ArrayList<Hashtable>();                  //List vsetkych stavov 
+
+    public static void clear() {
+        stavy.clear();
+    }
 
     /**
      * vlozi premennu do stavu nula bez jeho aktuaizacie
@@ -30,16 +34,14 @@ public class Stav {
         premenna = premenna.toUpperCase();
         if (stavy.isEmpty()) {                      //ak este stav neexistuje vytvori sa stav nula
             Hashtable<String, Integer> stav = new Hashtable<String, Integer>();
-                stav.put(premenna, hodnota);            //vlozi premennu s hodnotou do stavu
-                 stavy.add(stav);
+            stav.put(premenna, hodnota);            //vlozi premennu s hodnotou do stavu
+            stavy.add(stav);
         } else {
-                              //ak uz stav nula existuje tak don vlozi premenne
-           
-                stavy.get(0).put(premenna, hodnota);     //vlozi premennu s hodnotou do stavu
-            }
-        }
+            //ak uz stav nula existuje tak don vlozi premenne
 
-    
+            stavy.get(0).put(premenna, hodnota);     //vlozi premennu s hodnotou do stavu
+        }
+    }
 
     /**
      * vlozi konkretnej premennej v stave hodnotu a aktualizuje stav
@@ -57,8 +59,8 @@ public class Stav {
         }
 
         novyStav.put(premenna, hodnota);            //vlozenie hodnoty do stavu
+        System.out.println(premenna+""+novyStav.get(premenna));
         stavy.add(novyStav);                         // pridanie noveho stavu medzi vsetky stavy
-
     }
 
     /**
@@ -74,7 +76,6 @@ public class Stav {
         try {
             Hashtable<String, Integer> stavv = stavy.get(stavy.size() - 1);   //z posledneho stavu vrati hodnotu 
             int hodnota = stavv.get(premenna);
-
 
             return hodnota;
 

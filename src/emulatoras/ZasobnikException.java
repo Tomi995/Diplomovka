@@ -8,15 +8,15 @@ package emulatoras;
  *
  * @author Tomi
  */
-public class ZasobnikException extends Exception {
+public class ZasobnikException extends MyParserException {
+
+    private String message;
 
     public ZasobnikException() {
     }
 
     public ZasobnikException(String sprava) {
-        System.out.println(sprava);
-        
-        System.exit(0);                             //zastavenie programu ak nastane chyba, nema zmysel pokracovat
-
+        message = sprava;
+        System.out.println("ZasobnikException: " + sprava);
     }
 }

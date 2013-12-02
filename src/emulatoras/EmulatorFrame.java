@@ -4,25 +4,28 @@
  */
 package emulatoras;
 
+import java.util.Hashtable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Tomi
  */
 public class EmulatorFrame extends javax.swing.JFrame {
-private Inicializacia skuska ;     //vlozeny kod
-private Parser parser;    
-    
-    
+
+    private Analyza analyza;     //vlozeny kod
+    private Parser parser;
+
     /**
      * Creates new form EmulatorFrame
      */
     public EmulatorFrame() {
         initComponents();
-        skuska = new Inicializacia();     //vlozeny kod
-        
+        analyza = new Analyza();     //vlozeny kod
     }
 
     /**
@@ -34,79 +37,445 @@ private Parser parser;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jLabel1 = new javax.swing.JLabel();
+        btn_preloz = new javax.swing.JButton();
+        btn_analyzuj = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         kod = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        status_bar = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        instrukcie = new javax.swing.JList();
+        jLabel3 = new javax.swing.JLabel();
+        btn_step_back = new javax.swing.JButton();
+        btn_step_forward = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        zasobnik_pred = new javax.swing.JList();
+        stav_pred = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        premenne_pred = new javax.swing.JList();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        zasobnik_po = new javax.swing.JList();
+        stav_po = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        premenne_po = new javax.swing.JList();
+        jLabel8 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
+
+        jInternalFrame1.setVisible(true);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Emulátor AS");
+        setResizable(false);
+
+        btn_preloz.setText("Prelož");
+        btn_preloz.setEnabled(false);
+        btn_preloz.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_prelozMouseReleased(evt);
+            }
+        });
+
+        btn_analyzuj.setText("Analyzuj");
+        btn_analyzuj.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_analyzujMouseReleased(evt);
+            }
+        });
+
+        jLabel2.setLabelFor(kod);
+        jLabel2.setText("Vstupný kód");
 
         kod.setColumns(20);
+        kod.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         kod.setRows(5);
+        kod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                kodKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(kod);
 
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
+        status_bar.setForeground(new java.awt.Color(102, 102, 102));
+        status_bar.setText("Pripravený");
+
+        instrukcie.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        instrukcie.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                instrukcieValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(instrukcie);
+
+        jLabel3.setText("Inštrukcie");
+
+        btn_step_back.setText("<");
+        btn_step_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_step_backActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
+        btn_step_forward.setText(">");
+        btn_step_forward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_step_forwardActionPerformed(evt);
             }
         });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pred inštrukciou"));
+
+        jLabel4.setText("Stav");
+
+        jLabel6.setLabelFor(zasobnik_pred);
+        jLabel6.setText("Zásobník");
+
+        zasobnik_pred.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(zasobnik_pred);
+
+        stav_pred.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        stav_pred.setText("--");
+
+        premenne_pred.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane5.setViewportView(premenne_pred);
+
+        jLabel9.setText("Premenné");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(stav_pred)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 8, Short.MAX_VALUE))))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(stav_pred))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Po inštrukcii"));
+
+        jLabel5.setText("Stav");
+
+        jLabel7.setLabelFor(zasobnik_po);
+        jLabel7.setText("Zásobník");
+
+        zasobnik_po.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(zasobnik_po);
+
+        stav_po.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        stav_po.setText("--");
+
+        premenne_po.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(premenne_po);
+
+        jLabel8.setText("Premenné");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(stav_po))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(stav_po))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
+                .addContainerGap())
+        );
+
+        jMenu2.setText("Súbor");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Nový");
+        jMenu2.add(jMenuItem1);
+        jMenu2.add(jSeparator2);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setText("Otvoriť");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setText("Uložiť");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setText("Uložiť ako");
+        jMenu2.add(jMenuItem4);
+        jMenu2.add(jSeparator3);
+
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setText("Exportovať");
+        jMenuItem7.setToolTipText("");
+        jMenu2.add(jMenuItem7);
+        jMenu2.add(jSeparator1);
+
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem6.setText("Ukončiť");
+        jMenu2.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Pomoc");
+
+        jMenuItem2.setText("O programe");
+        jMenu3.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(478, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btn_analyzuj)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_preloz)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_step_back)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_step_forward)))
+                                .addGap(0, 7, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(btn_analyzuj)
+                    .addComponent(btn_preloz)
+                    .addComponent(btn_step_back)
+                    .addComponent(btn_step_forward))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(status_bar)
+                .addGap(6, 6, 6))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-    try {
-       // Zasobnik.getZasobnik().vymaz();
-        skuska.iniciuj(kod.getText());
-        System.out.println(Zasobnik.getZasobnik().vyber()); //vypis zo zasobnika
-    } catch (MyParserException ex) {
-        Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ZasobnikException ex) {
-        Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+    private void setStatusBarText(String text) {
+        status_bar.setText(text);
     }
-        
-    }//GEN-LAST:event_jButton1MouseReleased
 
-    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+    private void btn_analyzujMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_analyzujMouseReleased
+        try {
+            analyza.iniciuj(kod.getText());
+            toggleAnalyzed(true);
+        } catch (MyParserException ex) {
+            setStatusBarText(ex.getMessage());
+            toggleAnalyzed(false);
+        }
+    }//GEN-LAST:event_btn_analyzujMouseReleased
+
+    private void btn_prelozMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_prelozMouseReleased
+        try {
+            Vykonavanie v = Vykonavanie.getInstance();
+
+            Stav.clear();
+            Zasobnik z = Zasobnik.getZasobnik();
+            z.vymaz();
+            v.clear();
+            parser = new Parser();
+            parser.parse(kod.getText());
+            parser.log("<KONIEC>");
+            fillInstructions();
+        } catch (MyParserException ex) {
+            setStatusBarText(ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_prelozMouseReleased
+
+    private void toggleAnalyzed(boolean analyzed) {
+        if (analyzed) {
+            setStatusBarText("Analýza OK, stlačte prelož pre preklad.");
+        }
+        btn_preloz.setEnabled(analyzed);
+        btn_analyzuj.setEnabled(!analyzed);
+    }
+
+    private void fillInstructions() {
+        Vykonavanie v = Vykonavanie.getInstance();
+        Krok[] kroky = new Krok[v.getKroky().size()];
+        int i = 0;
+        for (Krok k : v.getKroky()) {
+            kroky[i++] = k;
+        }
+        instrukcie.setListData(kroky);
+    }
+
+    private void updateSelection() {
+        int index = instrukcie.getSelectedIndex();
+        if (index == -1) {
+            return;
+        }
+        Vykonavanie v = Vykonavanie.getInstance();
+        Krok k = v.getKroky().get(index);
+
+        premenne_pred.setListData(k.getPremenne());
+        zasobnik_pred.setListData(k.getZasobnik());
+        stav_pred.setText("s" + (k.getStav()));
+
+        if (index < v.getKroky().size() - 1) {
+            k = v.getKroky().get(index + 1);
+        }
+
+        premenne_po.setListData(k.getPremenne());
+        zasobnik_po.setListData(k.getZasobnik());
+        stav_po.setText("s" + (k.getStav()));
+    }
+
+    private void kodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodKeyTyped
+        toggleAnalyzed(false);
+    }//GEN-LAST:event_kodKeyTyped
+
+    private void instrukcieValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_instrukcieValueChanged
+        updateSelection();
+    }//GEN-LAST:event_instrukcieValueChanged
+
+    private void btn_step_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_step_backActionPerformed
+        int index = instrukcie.getSelectedIndex() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        instrukcie.setSelectedIndex(index);
+    }//GEN-LAST:event_btn_step_backActionPerformed
+
+    private void btn_step_forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_step_forwardActionPerformed
+        int index = instrukcie.getSelectedIndex();
         
-        parser = new Parser();
-        parser.parse(kod.getText());
-    }//GEN-LAST:event_jButton2MouseReleased
+        if (index == -1) {
+            index = 0;
+        } else {    
+            index++;
+        }
+        instrukcie.setSelectedIndex(index);
+    }//GEN-LAST:event_btn_step_forwardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,23 +487,20 @@ private Parser parser;
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -143,9 +509,50 @@ private Parser parser;
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btn_analyzuj;
+    private javax.swing.JButton btn_preloz;
+    private javax.swing.JButton btn_step_back;
+    private javax.swing.JButton btn_step_forward;
+    private javax.swing.JList instrukcie;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTextArea kod;
+    private javax.swing.JList premenne_po;
+    private javax.swing.JList premenne_pred;
+    private javax.swing.JLabel status_bar;
+    private javax.swing.JLabel stav_po;
+    private javax.swing.JLabel stav_pred;
+    private javax.swing.JList zasobnik_po;
+    private javax.swing.JList zasobnik_pred;
     // End of variables declaration//GEN-END:variables
 }

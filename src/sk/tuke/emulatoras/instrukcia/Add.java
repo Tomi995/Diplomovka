@@ -5,10 +5,9 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,29 +21,24 @@ public class Add extends Instrukcia {
      * @author Tomi
      */
     @Override
-   public void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) throws MyParserException {
 
         int prveCislo = 0;          //premenna pre prve cislo zo zasobnika
         int druheCislo = 0;            //premenna pre druhe cislo zo zasobnika
         int vysledok;                   // vysledok
 
-        try {
-            if (Zasobnik.getZasobnik().jeCislo()) {                             //overenie ci je v zasobniku cislo
-                prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());   //ak je tak ho priradi do premennej a vyhodi zo zasobnika
-            } else {
-                throw new ZasobnikException("Zla hodnota v zasobniku");         //ak nie exception
-            }
-            if (Zasobnik.getZasobnik().jeCislo()) {                             //overenie ci je druhe cislo v zasobniku cislo 
-                druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());  //ak ano priradi sa do premennej a vyhodi zo zasobnika
-            } else {
-                throw new ZasobnikException("Zla hodnota v zasobniku");         //ak nie exception
-            }
-            vysledok = prveCislo + druheCislo;                                  //vyhodnotenie
-            Zasobnik.getZasobnik().vloz(vysledok);                              //vlozenie vysledku do zasobnika
-        } catch (ZasobnikException ex) {                                        //zachytenie exception
-            System.out.println(ex);
+        if (Zasobnik.getZasobnik().jeCislo()) {                             //overenie ci je v zasobniku cislo
+            prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());   //ak je tak ho priradi do premennej a vyhodi zo zasobnika
+        } else {
+            throw new ZasobnikException("Zla hodnota v zasobniku");         //ak nie exception
         }
-
+        if (Zasobnik.getZasobnik().jeCislo()) {                             //overenie ci je druhe cislo v zasobniku cislo 
+            druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());  //ak ano priradi sa do premennej a vyhodi zo zasobnika
+        } else {
+            throw new ZasobnikException("Zla hodnota v zasobniku");         //ak nie exception
+        }
+        vysledok = prveCislo + druheCislo;                                  //vyhodnotenie
+        Zasobnik.getZasobnik().vloz(vysledok);                              //vlozenie vysledku do zasobnika
     }
 
     /**
@@ -57,9 +51,8 @@ public class Add extends Instrukcia {
         return "^ADD$";
     }
 
-
     @Override
     public String platnost() {
-    return "^ADD$";
+        return "^ADD$";
     }
 }

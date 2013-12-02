@@ -5,6 +5,7 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
 import java.util.logging.Level;
@@ -14,18 +15,16 @@ import java.util.logging.Logger;
  *
  * @author Tomi
  */
-public class True extends Instrukcia{
-/**
- * vykonanie instrukcie TRUE
- * @param instrukcia 
- */
+public class True extends Instrukcia {
+
+    /**
+     * vykonanie instrukcie TRUE
+     *
+     * @param instrukcia
+     */
     @Override
-    public void vykonaj(String instrukcia){
-        try {
-            Zasobnik.getZasobnik().vloz("TRUE");                                //vlozi do zasobnika hodnitu true
-        } catch (ZasobnikException ex) {
-            
-        }
+    public void vykonaj(String instrukcia) throws MyParserException {
+        Zasobnik.getZasobnik().vloz("TRUE");                                //vlozi do zasobnika hodnitu true
     }
 
     @Override
@@ -33,10 +32,8 @@ public class True extends Instrukcia{
         return "^TRUE$";
     }
 
-
     @Override
     public String platnost() {
         return "^TRUE$";
     }
-    
 }

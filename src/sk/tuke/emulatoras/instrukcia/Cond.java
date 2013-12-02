@@ -5,6 +5,7 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 import emulatoras.Parser;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 public class Cond extends Instrukcia {
 
     @Override
-    public void vykonaj(String instrukcia) {
+    public void vykonaj(String instrukcia) throws MyParserException {
 
         Parser parser = new Parser();                                              //vytvorenie parsera
 
@@ -29,12 +30,10 @@ public class Cond extends Instrukcia {
         instrukcia = instrukcia.replaceAll("\\s", "");                          //odstranenie bielych znakov
         instrukcia = instrukcia.toUpperCase();                                  //zmena na velke pismena
 
-        try {
-            if (!Zasobnik.getZasobnik().jeCislo()) {                            //zistenie ci je v zasobniku bool hodnota
-                rozhodnutiePravdivosti = Zasobnik.getZasobnik().vyber();        //vyberie hodnotu zo zasobnika a vlozi do premennej
-            }
-        } catch (ZasobnikException e) {
+        if (!Zasobnik.getZasobnik().jeCislo()) {                            //zistenie ci je v zasobniku bool hodnota
+            rozhodnutiePravdivosti = Zasobnik.getZasobnik().vyber();        //vyberie hodnotu zo zasobnika a vlozi do premennej
         }
+        
         Pattern pattern = Pattern.compile(regexp());                            //pattern pre regularny vyraz
         Matcher match = pattern.matcher(instrukcia);
 
@@ -55,13 +54,11 @@ public class Cond extends Instrukcia {
         return "^COND[(](.*),(.*)[)]$";
     }
 
- 
-
     @Override
     public String platnost() {
 
-             return "^COND[(](.*),(.*)[)]$";
-   
-        
+        return "^COND[(](.*),(.*)[)]$";
+
+
     }
 }

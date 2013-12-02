@@ -5,6 +5,7 @@
 package sk.tuke.emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
+import emulatoras.MyParserException;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
 
@@ -12,15 +13,12 @@ import emulatoras.ZasobnikException;
  *
  * @author Tomi
  */
-public class False extends Instrukcia{
+public class False extends Instrukcia {
 
     @Override
-    public void vykonaj(String instrukcia) {
-        try {
-            Zasobnik.getZasobnik().vloz("FALSE");                               //vlozenie hodnoty do zasobnika
-        } catch (ZasobnikException ex) {
-            
-        }}
+    public void vykonaj(String instrukcia) throws MyParserException {
+        Zasobnik.getZasobnik().vloz("FALSE");                               //vlozenie hodnoty do zasobnika
+    }
 
     @Override
     public String regexp() {
@@ -29,7 +27,6 @@ public class False extends Instrukcia{
 
     @Override
     public String platnost() {
-    return "^FALSE$";
+        return "^FALSE$";
     }
-    
 }
