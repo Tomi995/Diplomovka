@@ -103,6 +103,7 @@ private Parser parser;
     }//GEN-LAST:event_jButton1MouseReleased
 
     private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+        
         parser = new Parser();
         parser.parse(kod.getText());
     }//GEN-LAST:event_jButton2MouseReleased

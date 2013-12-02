@@ -30,21 +30,16 @@ public class Stav {
         premenna = premenna.toUpperCase();
         if (stavy.isEmpty()) {                      //ak este stav neexistuje vytvori sa stav nula
             Hashtable<String, Integer> stav = new Hashtable<String, Integer>();
-            if (hodnota == null) {
-                //ak nezadam hodnotu vlozi sa s null (!!!!!nefunguje musim domysliet ako vlozit null)
-            } else {
                 stav.put(premenna, hodnota);            //vlozi premennu s hodnotou do stavu
-            }
-            stavy.add(stav);
+                 stavy.add(stav);
         } else {
-            if (hodnota == null) {                  //ak uz stav nula existuje tak don vlozi premenne
-                //ak nezadam hodnotu vlozi sa s null (!!!!!nefunguje musim domysliet ako vlozit null)
-            } else {
+                              //ak uz stav nula existuje tak don vlozi premenne
+           
                 stavy.get(0).put(premenna, hodnota);     //vlozi premennu s hodnotou do stavu
             }
         }
 
-    }
+    
 
     /**
      * vlozi konkretnej premennej v stave hodnotu a aktualizuje stav

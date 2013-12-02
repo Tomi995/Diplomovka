@@ -127,9 +127,9 @@ public class Parser {
             Matcher match = pattern.matcher(prikaz);
 
             if (match.find()) {
-
-                instr.vykonaj(prikaz);
                 System.out.println("vykonanie  "+prikaz);
+                instr.vykonaj(prikaz);
+                
                 vykonanie = true;
             }
 

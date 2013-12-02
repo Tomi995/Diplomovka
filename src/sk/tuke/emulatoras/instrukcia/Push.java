@@ -39,7 +39,7 @@ public class Push extends Instrukcia {
         if (match.find()) {
             hodnota = Integer.parseInt(match.group(3));                         //vyparsovanie hodnoty (int) zo stringu
             String znamienka = match.group(1);                                  //vlozenie stringu so znamienkami do premennej
-
+           
             while (index != znamienka.length()) {                               //cyklus na spocitanie vsetkych minusov
                 if (znamienka.charAt(index) == '-') {
                     pocetMinus++;
@@ -69,7 +69,8 @@ public class Push extends Instrukcia {
 
     @Override
     public String regexp() {
-        return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
+        return "^PUSH-[(]*(([-]|[+])?)([0-9]+)[)]*$";
+      //  return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$"; stary regex
     }
 
 
