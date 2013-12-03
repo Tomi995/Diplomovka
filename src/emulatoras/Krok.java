@@ -4,6 +4,8 @@
  */
 package emulatoras;
 
+
+
 /**
  *
  * @author Lenovo
@@ -14,7 +16,7 @@ public class Krok {
     private String[] zasobnik;
     private String[] premenne;
     private int stav;
-
+    private String vypis;
 
     @Override
     public String toString() {
@@ -75,5 +77,74 @@ public class Krok {
      */
     public void setStav(int stav) {
         this.stav = stav;
+    }
+    
+    public String[] stringPreVypis(int index) {
+        String[] pole = new String[6];
+        String vypis;
+
+        Krok krok = Vykonavanie.getInstance().getKroky().get(index);
+        
+        pole[0] = krok.getName();
+        System.out.println(pole[0]);
+       
+        pole[1] = "Číslo stavu : s" + krok.getStav();
+
+        vypis = "Zaobnik pred vykonanim: ";
+        String[] z = krok.getZasobnik();
+        if (!z.equals("")) {
+            int i = z.length;
+            for (String zasobnik : z) {
+                vypis += zasobnik + "; ";
+                --i;
+            }
+        } else {
+            vypis += "Prazdny zasobnik";
+        }
+
+        pole[2] = vypis;
+
+        vypis = "Zasobnik po vykonani: ";
+        if(index != Vykonavanie.getInstance().getKroky().size()-1){
+        z = Vykonavanie.getInstance().getKroky().get(index + 1).getZasobnik();
+        if (!z.equals("")) {
+            int i = z.length;
+            for (String zasobnik : z) {
+                vypis += zasobnik + "; ";
+                --i;
+            }
+        } else {
+            vypis += "Prazdny zasobnik";
+        }
+        }else{
+        z = Vykonavanie.getInstance().getKroky().get(index).getZasobnik();
+        if (!z.equals("")) {
+            int i = z.length;
+            for (String zasobnik : z) {
+                vypis += zasobnik + "; ";
+                --i;
+            }
+        } else {
+            vypis += "Prazdny zasobnik";
+        }}
+
+        pole[3] = vypis;
+
+        vypis = "Premenne v stave: ";
+
+        if (!krok.getPremenne().equals("")) {
+            int i = 0;
+            for (String premenna : krok.getPremenne()) {
+                vypis +="[" + premenna+"]" + "; ";
+                i++;
+            }
+        } else {
+            vypis += "Ziadne premenne v danom stave";
+        }
+
+        pole[4] = vypis;
+        pole[5] = "---------------------------------------------------------------";
+
+        return pole;
     }
 }

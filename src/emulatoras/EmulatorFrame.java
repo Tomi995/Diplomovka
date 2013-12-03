@@ -318,6 +318,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem7.setText("Exportovať");
         jMenuItem7.setToolTipText("");
+        jMenuItem7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_Export(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
         jMenu2.add(jSeparator1);
 
@@ -499,9 +504,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
         try {
            save.save(text);
           } catch (FileNotFoundException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         } catch (NullPointerException ex){}
     }//GEN-LAST:event_btn_Save
 
@@ -510,9 +515,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
         try {
            save.saveAs(text);
           } catch (FileNotFoundException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         }catch (NullPointerException ex){}
           
             
@@ -529,11 +534,21 @@ public class EmulatorFrame extends javax.swing.JFrame {
         kod.setText(open.getKod());
         save.setAdresa(open.getAdresa());
           } catch (FileNotFoundException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            setStatusBarText(ex.getMessage());
         } catch (NullPointerException ex){}
     }//GEN-LAST:event_btn_Open
+
+    private void btn_Export(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Export
+        try {
+            Export export = new Export();
+        } catch (IOException ex) {
+            setStatusBarText(ex.getMessage());
+        }
+        
+       
+    }//GEN-LAST:event_btn_Export
 
     /**
      * @param args the command line arguments

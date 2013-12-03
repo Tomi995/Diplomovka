@@ -148,9 +148,9 @@ public class Parser {
         String[] zasobnik_po = {"Prázdny zásobník"};
         if (!z.zasobnik.isEmpty()) {
             zasobnik_po = new String[z.zasobnik.size()];
-            i = 0;
+            i = z.zasobnik.size();
             for (String zasobnik : z.zasobnik) {
-                zasobnik_po[i++] = zasobnik;
+                zasobnik_po[--i] = zasobnik;
             }
         }
 

@@ -51,7 +51,7 @@ public class Save {
         text = text.toUpperCase();
         text = text.replaceAll("\\s", "");
         JFileChooser saveFile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine", "am");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.am*.txt)", "am","txt");
         saveFile.setFileFilter(filter);
         saveFile.showSaveDialog(null);
         adresa = saveFile.getSelectedFile().getAbsoluteFile().toString() + ".am";
