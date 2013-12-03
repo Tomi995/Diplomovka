@@ -4,12 +4,18 @@
  */
 package emulatoras;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -19,6 +25,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
     private Analyza analyza;     //vlozeny kod
     private Parser parser;
+    private Save save;
+    
+    
 
     /**
      * Creates new form EmulatorFrame
@@ -26,6 +35,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
     public EmulatorFrame() {
         initComponents();
         analyza = new Analyza();     //vlozeny kod
+        save = new Save();
+        
     }
 
     /**
@@ -38,7 +49,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         btn_preloz = new javax.swing.JButton();
         btn_analyzuj = new javax.swing.JButton();
@@ -85,19 +95,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
         jMenu1.setText("jMenu1");
 
-        jInternalFrame1.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,6 +106,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
         btn_preloz.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btn_prelozMouseReleased(evt);
+            }
+        });
+        btn_preloz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prelozActionPerformed(evt);
             }
         });
 
@@ -287,14 +289,29 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Otvoriť");
+        jMenuItem5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_Open(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText("Uložiť");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_Save(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Uložiť ako");
+        jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_SaveAs(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
         jMenu2.add(jSeparator3);
 
@@ -477,6 +494,47 @@ public class EmulatorFrame extends javax.swing.JFrame {
         instrukcie.setSelectedIndex(index);
     }//GEN-LAST:event_btn_step_forwardActionPerformed
 
+    private void btn_Save(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Save
+       String text = kod.getText();
+        try {
+           save.save(text);
+          } catch (FileNotFoundException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex){}
+    }//GEN-LAST:event_btn_Save
+
+    private void btn_SaveAs(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SaveAs
+        String text = kod.getText();
+        try {
+           save.saveAs(text);
+          } catch (FileNotFoundException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (NullPointerException ex){}
+          
+            
+          
+    }//GEN-LAST:event_btn_SaveAs
+
+    private void btn_prelozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prelozActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_prelozActionPerformed
+
+    private void btn_Open(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Open
+       try {
+        Open open = new Open();
+        kod.setText(open.getKod());
+        save.setAdresa(open.getAdresa());
+          } catch (FileNotFoundException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex){}
+    }//GEN-LAST:event_btn_Open
+
     /**
      * @param args the command line arguments
      */
@@ -514,7 +572,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_step_back;
     private javax.swing.JButton btn_step_forward;
     private javax.swing.JList instrukcie;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

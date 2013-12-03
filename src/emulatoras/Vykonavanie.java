@@ -21,7 +21,7 @@ public class Vykonavanie {
     }
 
     /**
-     * vytvori len jeden zasobnik ak nie je, ak existuje vrati nan odkaz
+     * vytvori
      *
      * @return
      */
