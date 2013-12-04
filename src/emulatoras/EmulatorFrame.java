@@ -4,6 +4,8 @@
  */
 package emulatoras;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,8 +28,24 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private Analyza analyza;     //vlozeny kod
     private Parser parser;
     private Save save;
-    
-    
+    private InicializaciaPremennychFrame premenneFrame;
+
+    private void enableFrame() {
+        this.setEnabled(true);
+    }
+
+    private void showPremenneFrame(List<String> premenne) {
+        this.setEnabled(false);
+
+        premenneFrame = new InicializaciaPremennychFrame(premenne);
+        premenneFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                enableFrame();
+            }
+        });
+        premenneFrame.setVisible(true);
+    }
 
     /**
      * Creates new form EmulatorFrame
@@ -36,7 +54,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         initComponents();
         analyza = new Analyza();     //vlozeny kod
         save = new Save();
-        
+
     }
 
     /**
@@ -407,8 +425,16 @@ public class EmulatorFrame extends javax.swing.JFrame {
     }
 
     private void btn_analyzujMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_analyzujMouseReleased
+        Vykonavanie v = Vykonavanie.getInstance();
+        Stav.clear();
+        Zasobnik z = Zasobnik.getZasobnik();
+        z.vymaz();
+        v.clear();
         try {
             analyza.iniciuj(kod.getText());
+            if (analyza.getVsetky_premenne().size() > 0) {
+                showPremenneFrame(analyza.getVsetky_premenne());
+            }
             toggleAnalyzed(true);
         } catch (MyParserException ex) {
             setStatusBarText(ex.getMessage());
@@ -418,12 +444,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
     private void btn_prelozMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_prelozMouseReleased
         try {
-            Vykonavanie v = Vykonavanie.getInstance();
 
-            Stav.clear();
-            Zasobnik z = Zasobnik.getZasobnik();
-            z.vymaz();
-            v.clear();
+
             parser = new Parser();
             parser.parse(kod.getText());
             parser.log("<KONIEC>");
@@ -490,38 +512,40 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
     private void btn_step_forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_step_forwardActionPerformed
         int index = instrukcie.getSelectedIndex();
-        
+
         if (index == -1) {
             index = 0;
-        } else {    
+        } else {
             index++;
         }
         instrukcie.setSelectedIndex(index);
     }//GEN-LAST:event_btn_step_forwardActionPerformed
 
     private void btn_Save(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Save
-       String text = kod.getText();
+        String text = kod.getText();
         try {
-           save.save(text);
-          } catch (FileNotFoundException ex) {
+            save.save(text);
+        } catch (FileNotFoundException ex) {
             setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
             setStatusBarText(ex.getMessage());
-        } catch (NullPointerException ex){}
+        } catch (NullPointerException ex) {
+        }
     }//GEN-LAST:event_btn_Save
 
     private void btn_SaveAs(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SaveAs
         String text = kod.getText();
         try {
-           save.saveAs(text);
-          } catch (FileNotFoundException ex) {
+            save.saveAs(text);
+        } catch (FileNotFoundException ex) {
             setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
             setStatusBarText(ex.getMessage());
-        }catch (NullPointerException ex){}
-          
-            
-          
+        } catch (NullPointerException ex) {
+        }
+
+
+
     }//GEN-LAST:event_btn_SaveAs
 
     private void btn_prelozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prelozActionPerformed
@@ -529,15 +553,16 @@ public class EmulatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_prelozActionPerformed
 
     private void btn_Open(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Open
-       try {
-        Open open = new Open();
-        kod.setText(open.getKod());
-        save.setAdresa(open.getAdresa());
-          } catch (FileNotFoundException ex) {
+        try {
+            Open open = new Open();
+            kod.setText(open.getKod());
+            save.setAdresa(open.getAdresa());
+        } catch (FileNotFoundException ex) {
             setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
             setStatusBarText(ex.getMessage());
-        } catch (NullPointerException ex){}
+        } catch (NullPointerException ex) {
+        }
     }//GEN-LAST:event_btn_Open
 
     private void btn_Export(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Export
@@ -546,8 +571,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             setStatusBarText(ex.getMessage());
         }
-        
-       
+
+
     }//GEN-LAST:event_btn_Export
 
     /**
