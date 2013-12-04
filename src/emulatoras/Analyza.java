@@ -76,12 +76,12 @@ public class Analyza {
             if (match.find()) {
                 String premenna = match.group(2);
                 if (!vsetky_premenne.contains(premenna)) {
-                    vsetky_premenne.add(premenna);
+                    getVsetky_premenne().add(premenna);
                 }
             }
         }
 
-        System.out.println(vsetky_premenne);      //text na zmazanie
+        System.out.println(getVsetky_premenne());      //text na zmazanie
     }
 
     /**
@@ -193,5 +193,12 @@ public class Analyza {
         if (!skontrolovane) {
             throw new MyParserException("Syntakticka chyba : " + prikaz);
         }
+    }
+
+    /**
+     * @return the vsetky_premenne
+     */
+    public List<String> getVsetky_premenne() {
+        return vsetky_premenne;
     }
 }
