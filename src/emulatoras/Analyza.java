@@ -34,6 +34,7 @@ public class Analyza {
     private List<Instrukcia> instrukcie = new ArrayList<Instrukcia>();
     // list vsetkych premennych
     private List<String> vsetky_premenne = new ArrayList<>();
+    private Stav inicializacia = new Stav();
 
     public Analyza() {
         instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
@@ -81,7 +82,7 @@ public class Analyza {
             }
         }
 
-        System.out.println(getVsetky_premenne());      //text na zmazanie
+        System.out.println("premenne "+getVsetky_premenne()+"" +getVsetky_premenne().size());      //text na zmazanie
     }
 
     /**
@@ -155,13 +156,9 @@ public class Analyza {
      * @param vsetkypremenne
      * @return
      */
-    public void vlozDoStavu(List<String> vsetky_premenne) {
-        Stav inicializacia = new Stav();
-        Integer n = 0;
-        while (vsetky_premenne.size() != n) {
-            inicializacia.vlozPremennu(vsetky_premenne.get(n), null); // treba este vyriesit vlozenie hodnoty
-            n++;
-        }
+    public void vlozDoStavu(String premenna, int hodnota) {
+        getInicializacia().vlozPremennu(premenna, hodnota); // treba este vyriesit vlozenie hodnoty
+     
     }
 
     /**
@@ -201,4 +198,19 @@ public class Analyza {
     public List<String> getVsetky_premenne() {
         return vsetky_premenne;
     }
+
+
+
+     public void resetVsetky_premenne() {
+        this.vsetky_premenne.clear();
+    }
+
+    /**
+     * @return the inicializacia
+     */
+    public Stav getInicializacia() {
+        return inicializacia;
+    }
+    
+   
 }

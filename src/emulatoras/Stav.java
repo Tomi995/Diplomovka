@@ -29,7 +29,7 @@ public class Stav {
      * @param premenna
      * @param hodnota
      */
-    public void vlozPremennu(String premenna, Integer hodnota) {
+    public  void vlozPremennu(String premenna, Integer hodnota) {
 
         premenna = premenna.toUpperCase();
         if (stavy.isEmpty()) {                      //ak este stav neexistuje vytvori sa stav nula

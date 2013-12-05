@@ -4,6 +4,9 @@
  */
 package emulatoras;
 
+import static emulatoras.Stav.stavy;
+import java.awt.event.WindowEvent;
+import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -21,12 +24,16 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
      * Creates new form InicializaciaPremennychFrame
      */
     public InicializaciaPremennychFrame(List<String> premenne) {
+
         initComponents();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         String[] labels = {"Premenná", "Hodnota"};
 
-        model = new DefaultTableModel(labels, premenne.size() - 1) {
+        System.out.println(premenne.size() + " size");
+
+        model = new DefaultTableModel(labels, 0) {
+            
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 if (mColIndex == 0) {
                     return false;
@@ -34,14 +41,28 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
                 return true;
             }
         };
-        int i = 0;
+
 
         for (String premenna : premenne) {
             String[] row = {premenna, ""};
             model.addRow(row);
+            System.out.println("added row");
         }
-
         variablesTable.setModel(model);
+    }
+
+    public void iniciovanieStavu() {
+        for (int riadok = 0; riadok < model.getRowCount(); riadok++) {
+            try {
+                int hodnota = (int) Integer.valueOf(model.getValueAt(riadok, 1).toString());
+                String premenna = model.getValueAt(riadok, 0).toString();
+                System.out.println(premenna + "   " + hodnota);
+                Stav stav = new Stav();
+                stav.vlozPremennu(premenna, hodnota);
+            } catch (NumberFormatException e) {
+            } catch (NullPointerException e) {
+            }
+        }
     }
 
     /**
@@ -92,6 +113,11 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(variablesTable);
 
         buttonSave.setText("Uložiť");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_UlozPremenne(evt);
+            }
+        });
 
         jLabel1.setText("Analýza našla nasledujúce premenné. Môžete im priradiť počiatočnú hodnotu v stave s0.");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -123,6 +149,11 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_UlozPremenne(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_UlozPremenne
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+    }//GEN-LAST:event_btn_UlozPremenne
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;
     private javax.swing.JLabel jLabel1;

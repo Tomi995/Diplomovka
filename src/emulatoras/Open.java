@@ -25,7 +25,7 @@ public class Open {
     public Open() throws FileNotFoundException, IOException, NullPointerException {
 
         JFileChooser openFile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.am*.txt)", "am","txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.txt)","txt");
         openFile.setFileFilter(filter);
         openFile.showOpenDialog(null);
         FileReader reader;

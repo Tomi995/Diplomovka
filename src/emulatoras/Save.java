@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.FileChooserUI;
@@ -29,10 +31,10 @@ public class Save {
         text = text.replaceAll("\\s", "");
         if (getAdresa().equalsIgnoreCase("")) {
             JFileChooser saveFile = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine", "am");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.txt)", "txt");
             saveFile.setFileFilter(filter);
             saveFile.showSaveDialog(null);
-            adresa = saveFile.getSelectedFile().getAbsoluteFile().toString() + ".am";
+            adresa = saveFile.getSelectedFile().getAbsoluteFile().toString() + ".txt";
             this.setAdresa(adresa);
         }
         BufferedWriter writer = null;
@@ -51,10 +53,14 @@ public class Save {
         text = text.toUpperCase();
         text = text.replaceAll("\\s", "");
         JFileChooser saveFile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.am*.txt)", "am","txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.txt)","txt");
         saveFile.setFileFilter(filter);
         saveFile.showSaveDialog(null);
-        adresa = saveFile.getSelectedFile().getAbsoluteFile().toString() + ".am";
+        adresa = saveFile.getSelectedFile().getAbsoluteFile().toString();
+        if (!kontrolaPripony(adresa)){
+            adresa += ".txt";
+        }
+        
         this.setAdresa(adresa);
         BufferedWriter writer = null;
         try {
@@ -81,5 +87,15 @@ public class Save {
      */
     public void setAdresa(String adresa) {
         this.adresa = adresa;
+    }
+    
+    private Boolean kontrolaPripony(String nazov) {
+        String regexp = ".txt$";
+        Pattern pattern = Pattern.compile(regexp);
+        Matcher match = pattern.matcher(nazov);
+        if (match.find()) {
+            return true;
+        }
+        return false;
     }
 }

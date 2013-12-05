@@ -80,15 +80,22 @@ public class Krok {
     }
     
     public String[] stringPreVypis(int index) {
-        String[] pole = new String[6];
-        String vypis;
-
-        Krok krok = Vykonavanie.getInstance().getKroky().get(index);
+        String[] pole = new String[7];
+        String vypis = "" ;
         
-        pole[0] = krok.getName();
+        
+        for(Krok krok : Vykonavanie.getInstance().getKroky()){
+            vypis += krok.getName() +":";
+        }
+        
+        vypis  = (String) vypis.subSequence(0, vypis.length()-10);
+       pole[0]=vypis;
+        
+       Krok krok = Vykonavanie.getInstance().getKroky().get(index);
+        pole[1] = krok.getName();
         System.out.println(pole[0]);
        
-        pole[1] = "Číslo stavu : s" + krok.getStav();
+        pole[2] = "Číslo stavu : s" + krok.getStav();
 
         vypis = "Zaobnik pred vykonanim: ";
         String[] z = krok.getZasobnik();
@@ -102,7 +109,7 @@ public class Krok {
             vypis += "Prazdny zasobnik";
         }
 
-        pole[2] = vypis;
+        pole[3] = vypis;
 
         vypis = "Zasobnik po vykonani: ";
         if(index != Vykonavanie.getInstance().getKroky().size()-1){
@@ -128,7 +135,7 @@ public class Krok {
             vypis += "Prazdny zasobnik";
         }}
 
-        pole[3] = vypis;
+        pole[4] = vypis;
 
         vypis = "Premenne v stave: ";
 
@@ -142,8 +149,8 @@ public class Krok {
             vypis += "Ziadne premenne v danom stave";
         }
 
-        pole[4] = vypis;
-        pole[5] = "---------------------------------------------------------------";
+        pole[5] = vypis;
+        pole[6] = "---------------------------------------------------------------";
 
         return pole;
     }
