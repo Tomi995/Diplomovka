@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  * @author Tomi
  */
-public class Cond extends Instrukcia {
+public class Branch extends Instrukcia {
 
     @Override
     public void vykonaj(String instrukcia) throws MyParserException {
@@ -51,13 +51,13 @@ public class Cond extends Instrukcia {
 
     @Override
     public String regexp() {
-        return "^COND[(](.*),(.*)[)]$";
+        return "^BRANCH[(](.*),(.*)[)]$";
     }
 
     @Override
     public String platnost() {
 
-        return "^COND[(](.*),(.*)[)]$";
+        return "^BRANCH[(](.*),(.*)[)]$";
 
 
     }

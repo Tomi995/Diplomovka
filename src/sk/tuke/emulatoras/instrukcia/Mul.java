@@ -13,7 +13,7 @@ import emulatoras.ZasobnikException;
  *
  * @author Tomi
  */
-public class Mult extends Instrukcia {
+public class Mul extends Instrukcia {
 
     /**
      * vykonanie instrukcie Mult
@@ -42,11 +42,11 @@ public class Mult extends Instrukcia {
 
     @Override
     public String regexp() {
-        return "^MULT$";
+        return "^MUL$";
     }
 
     @Override
     public String platnost() {
-        return "^MULT$";
+        return "^MUL$";
     }
 }

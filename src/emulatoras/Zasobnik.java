@@ -42,7 +42,7 @@ public class Zasobnik {
             navratova_hodnota = zasobnik.get(zasobnik.size() - 1);
             zasobnik.remove(zasobnik.size() - 1);
         } else {
-            throw new ZasobnikException("Prazdny zasobnik");            //ak je zasobnik prazdny vytcori exception
+            throw new ZasobnikException("V zásobníku je málo hodnôt pre vykonanie.");            //ak je zasobnik prazdny vytcori exception
         }
         return navratova_hodnota;
     }

@@ -40,15 +40,13 @@ public class Store extends Instrukcia {
                 hodnota = Integer.parseInt(Zasobnik.getZasobnik().vyber());     //zisti do akej premennej sa ma ulozit hodnota
                 stav.vlozHodnotu(premenna, hodnota);                            //vlozenie do stavu
             } catch (NumberFormatException e) {
-                try {
-                    throw new StavException("nieje mozne ulozit bool hodnotu");
-                } catch (StavException ex) {
-                    Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new MyParserException("Nieje mozne ulozit bool hodnotu do premennej: "+ premenna);
+                
                 }
             }
 
         }
-    }
+    
 
     @Override
     public String regexp() {

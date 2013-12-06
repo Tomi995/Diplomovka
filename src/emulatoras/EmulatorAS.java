@@ -5,7 +5,7 @@
 package emulatoras;
 
 import sk.tuke.emulatoras.instrukcia.Push;
-import sk.tuke.emulatoras.instrukcia.Cond;
+import sk.tuke.emulatoras.instrukcia.Branch;
 import sk.tuke.emulatoras.instrukcia.Store;
 import sk.tuke.emulatoras.instrukcia.Fetch;
 import sk.tuke.emulatoras.instrukcia.Add;
@@ -27,7 +27,7 @@ public class EmulatorAS {
         Store store = new Store();
         Push push = new Push();
         Stav stav = new Stav();
-        Cond cond = new Cond();
+        Branch cond = new Branch();
         Add add = new Add();
 
         push.vykonaj("PUSH-2");

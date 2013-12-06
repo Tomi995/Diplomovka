@@ -32,6 +32,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private Save save;
     private InicializaciaPremennychFrame premenneFrame;
     private Boolean ulozenyText;
+    private boolean inicializaciaStavov;
+   
 
     private void enableFrame() {
         this.setEnabled(true);
@@ -40,15 +42,16 @@ public class EmulatorFrame extends javax.swing.JFrame {
 
     private void showPremenneFrame(List<String> premenne) {
         this.setEnabled(false);
-        
+        setInicializaciaStavov(false);
         premenneFrame = new InicializaciaPremennychFrame(premenne);
         premenneFrame.addWindowListener(new WindowAdapter() {
-     
+        
             @Override
             public void windowClosing(WindowEvent e) {
                 enableFrame();
             }
         });
+        
         premenneFrame.setVisible(true);
         
     }
@@ -64,6 +67,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         save = new Save();
         jMenuItem7.setEnabled(false);
         premenneVisible.setEnabled(false);
+        setInicializaciaStavov(false);
         
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -81,6 +85,22 @@ public class EmulatorFrame extends javax.swing.JFrame {
     jDialogExit.setLocationRelativeTo(null);
     jDialogExit.setVisible(true);
       }
+    
+ /**
+ *vymaze vsetky polia pre vystup 
+ *  
+ */
+    public void vymaz(){
+      toggleAnalyzed(false);
+       premenne_pred.setListData(new String[0]);
+       premenne_po.setListData(new String[0]);
+       zasobnik_pred.setListData(new String [0]);
+       zasobnik_po.setListData(new String [0]);
+       instrukcie.setListData(new String[0]);
+       stav_pred.setText("--");
+       analyza.resetVsetky_premenne();
+       stav_po.setText("--");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -204,7 +224,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         setTitle("Emulátor AS");
         setResizable(false);
 
-        btn_preloz.setText("Prelož");
+        btn_preloz.setText("Vykonaj");
         btn_preloz.setEnabled(false);
         btn_preloz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,7 +398,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        premenneVisible.setText("Premenne");
+        premenneVisible.setText("Premenne v stave s0");
         premenneVisible.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 premenneVisibleActionPerformed(evt);
@@ -552,17 +572,28 @@ public class EmulatorFrame extends javax.swing.JFrame {
         Vykonavanie v = Vykonavanie.getInstance();
         Krok k = v.getKroky().get(index);
 
+        
+        
         premenne_pred.setListData(k.getPremenne());
         zasobnik_pred.setListData(k.getZasobnik());
-        stav_pred.setText("s" + (k.getStav()));
-
+      stav_pred.setText("s" + (k.getStav()));
+        if(isInicializaciaStavov()){
+        stav_pred.setText("s" + (k.getStav()-1));
+      }
+       
         if (index < v.getKroky().size() - 1) {
             k = v.getKroky().get(index + 1);
         }
 
         premenne_po.setListData(k.getPremenne());
         zasobnik_po.setListData(k.getZasobnik());
+       
         stav_po.setText("s" + (k.getStav()));
+        if(isInicializaciaStavov()){
+        stav_po.setText("s" + (k.getStav()-1));
+      }
+    
+    
     }
 
     private void kodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodKeyTyped
@@ -632,17 +663,45 @@ public class EmulatorFrame extends javax.swing.JFrame {
         Zasobnik z = Zasobnik.getZasobnik();
         z.vymaz();
         v.clear();
-        premenneFrame.iniciovanieStavu();
+        if (analyza.getVsetky_premenne().size() > 0) {
+            premenneFrame.iniciovanieStavu();
+        }
+        
+      
+        try{
+            setInicializaciaStavov(premenneFrame.getInicializovaneStavy());
+        }catch (NullPointerException e){
+            setInicializaciaStavov(false);
+        }
+        
         try {
+
             parser = new Parser();
+            parser.setInicializaciaStavov(isInicializaciaStavov());
+           
             parser.parse(kod.getText());
+           
             parser.log("<KONIEC>");
             fillInstructions();
             toggleAnalyzed(false);
             setStatusBarText("OK");
             jMenuItem7.setEnabled(true);
+        } catch (StavException ex) {
+            setStatusBarText(ex.getMessage());
+            vymaz();
+        } catch (ZasobnikException ex) {
+            setStatusBarText(ex.getMessage());
+            toggleAnalyzed(false);
+             vymaz();
         } catch (MyParserException ex) {
             setStatusBarText(ex.getMessage());
+            toggleAnalyzed(false);
+             vymaz();
+        
+         }catch (StackOverflowError ex){
+            setStatusBarText("Nekonecny cyklus.");
+            vymaz();
+            toggleAnalyzed(false);
         }
     }//GEN-LAST:event_btn_prelozActionPerformed
 
@@ -651,8 +710,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
             Open open = new Open();
             kod.setText(open.getKod());
             save.setAdresa(open.getAdresa());
-            setStatusBarText("Súbor uložený: " + save.getAdresa() );
+            setStatusBarText("Súbor uložený: " + save.getAdresa());
             toggleAnalyzed(false);
+            vymaz();
         } catch (FileNotFoundException ex) {
             setStatusBarText(ex.getMessage());
         } catch (IOException ex) {
@@ -697,10 +757,13 @@ public class EmulatorFrame extends javax.swing.JFrame {
           try {
               analyza.resetVsetky_premenne();
               analyza.iniciuj(kod.getText());
+              
             if (analyza.getVsetky_premenne().size() > 0) {
                 showPremenneFrame(analyza.getVsetky_premenne());
                 premenneVisible.setEnabled(true);
+               setInicializaciaStavov(false);
             }
+            
             toggleAnalyzed(true);
         } catch (MyParserException ex) {
             setStatusBarText(ex.getMessage());
@@ -711,16 +774,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private void btn_Novy(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Novy
        
        kod.setText("");
-       
-       toggleAnalyzed(false);
-       premenne_pred.setListData(new String[0]);
-       premenne_po.setListData(new String[0]);
-       zasobnik_pred.setListData(new String [0]);
-       zasobnik_po.setListData(new String [0]);
-       instrukcie.setListData(new String[0]);
-       stav_pred.setText("s0");
-       analyza.resetVsetky_premenne();
-       stav_po.setText("s0");
+       vymaz();
+     
+      
     }//GEN-LAST:event_btn_Novy
 
     private void premenneVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_premenneVisibleActionPerformed
@@ -728,8 +784,13 @@ public class EmulatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_premenneVisibleActionPerformed
 
     private void btn_Export(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export
+        Krok krok = new Krok();
+            krok.setInicializovanyStavNula(inicializaciaStavov);
+        
         try {
-            Export export = new Export();
+            
+            Export export = new Export(isInicializaciaStavov());
+            
             setStatusBarText("Súbor exportovaný: " + export.getAdresa() );
         } catch (IOException | NullPointerException ex) {
             setStatusBarText(ex.getMessage());
@@ -820,6 +881,22 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private javax.swing.JList zasobnik_po;
     private javax.swing.JList zasobnik_pred;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the inicializaciaStavov
+     */
+    public boolean isInicializaciaStavov() {
+        return inicializaciaStavov;
+    }
+
+    /**
+     * @param inicializaciaStavov the inicializaciaStavov to set
+     */
+    public void setInicializaciaStavov(boolean inicializaciaStavov) {
+        this.inicializaciaStavov = inicializaciaStavov;
+    }
+
+
 
   
    

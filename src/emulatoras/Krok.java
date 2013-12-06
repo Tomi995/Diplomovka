@@ -17,6 +17,7 @@ public class Krok {
     private String[] premenne;
     private int stav;
     private String vypis;
+    private Boolean inicializovanyStavNula;
 
     @Override
     public String toString() {
@@ -79,24 +80,32 @@ public class Krok {
         this.stav = stav;
     }
     
-    public String[] stringPreVypis(int index) {
-        String[] pole = new String[7];
+    public String[] stringPreVypis(int index,Boolean inicializovanyStavNula){
+        setInicializovanyStavNula(inicializovanyStavNula);
+        String[] pole = new String[8];
         String vypis = "" ;
+        pole[7]="";
+        pole[6]="";
         
-        
-        for(Krok krok : Vykonavanie.getInstance().getKroky()){
-            vypis += krok.getName() +":";
+        if (index == 0) {
+            for (Krok krok : Vykonavanie.getInstance().getKroky()) {
+                vypis += krok.getName() + ":";
+            }
+
+            vypis = (String) vypis.subSequence(0, vypis.length() - 10);
+            pole[7] = vypis;
+            pole[6]="---------------------------------------------------------------";
+        }
+       Krok krok = Vykonavanie.getInstance().getKroky().get(index);
+        pole[5] = krok.getName();
+       
+        if(inicializovanyStavNula){
+        pole[4] = "Číslo stavu : s" + (krok.getStav()-1);
+        }else{
+        pole[4] = "Číslo stavu : s" + krok.getStav();
         }
         
-        vypis  = (String) vypis.subSequence(0, vypis.length()-10);
-       pole[0]=vypis;
         
-       Krok krok = Vykonavanie.getInstance().getKroky().get(index);
-        pole[1] = krok.getName();
-        System.out.println(pole[0]);
-       
-        pole[2] = "Číslo stavu : s" + krok.getStav();
-
         vypis = "Zaobnik pred vykonanim: ";
         String[] z = krok.getZasobnik();
         if (!z.equals("")) {
@@ -135,7 +144,7 @@ public class Krok {
             vypis += "Prazdny zasobnik";
         }}
 
-        pole[4] = vypis;
+        pole[2] = vypis;
 
         vypis = "Premenne v stave: ";
 
@@ -149,9 +158,23 @@ public class Krok {
             vypis += "Ziadne premenne v danom stave";
         }
 
-        pole[5] = vypis;
-        pole[6] = "---------------------------------------------------------------";
+        pole[1] = vypis;
+        pole[0] = "---------------------------------------------------------------";
 
         return pole;
+    }
+
+    /**
+     * @return the inicializovanyStavNula
+     */
+    public Boolean getInicializovanyStavNula() {
+        return inicializovanyStavNula;
+    }
+
+    /**
+     * @param inicializovanyStavNula the inicializovanyStavNula to set
+     */
+    public void setInicializovanyStavNula(Boolean inicializovanyStavNula) {
+        this.inicializovanyStavNula = inicializovanyStavNula;
     }
 }

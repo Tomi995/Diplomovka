@@ -285,7 +285,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btn_preloz">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Prelo&#x17e;"/>
+        <Property name="text" type="java.lang.String" value="Vykonaj"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -631,7 +631,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="premenneVisible">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Premenne"/>
+        <Property name="text" type="java.lang.String" value="Premenne v stave s0"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="premenneVisibleActionPerformed"/>

@@ -19,4 +19,11 @@ public class ZasobnikException extends MyParserException {
         message = sprava;
         System.out.println("ZasobnikException: " + sprava);
     }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
 }

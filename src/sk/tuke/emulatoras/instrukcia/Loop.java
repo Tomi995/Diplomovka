@@ -7,6 +7,7 @@ package sk.tuke.emulatoras.instrukcia;
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
 import emulatoras.Parser;
+import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,13 +30,14 @@ public class Loop extends Instrukcia {
 
         Pattern pattern = Pattern.compile(regexp());                            //pattern pre regularny vyraz
         Matcher match = pattern.matcher(instrukcia);
-
+        
         if (match.find()) {
             prvyPrikaz = match.group(1);                                            //priradenie prvej casti
             druhyPrikaz = match.group(2);                                           //priradenie druhej casti
-            System.out.println(prvyPrikaz + ":COND(" + druhyPrikaz + ":" + instrukcia + ",EMPTYOP)");
-            parser.parse(prvyPrikaz + ":COND(" + druhyPrikaz + ":" + instrukcia + ",EMPTYOP)");     //upravenie kodu ktory sa zacne znovu parsovat
+            System.out.println(prvyPrikaz + ":BRANCH(" + druhyPrikaz + ":" + instrukcia + ",EMPTYOP)");
+            parser.parse(prvyPrikaz + ":BRANCH(" + druhyPrikaz + ":" + instrukcia + ",EMPTYOP)");     //upravenie kodu ktory sa zacne znovu parsovat
         }
+       
     }
 
     @Override

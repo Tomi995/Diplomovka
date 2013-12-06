@@ -19,14 +19,17 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
 
     private List<String> premenne;
     private DefaultTableModel model;
+    private Boolean inicializovaneStavy = true;
+   
 
     /**
      * Creates new form InicializaciaPremennychFrame
      */
     public InicializaciaPremennychFrame(List<String> premenne) {
-
+       setInicializovaneStavy(false);
         initComponents();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      
 
         String[] labels = {"Premenná", "Hodnota"};
 
@@ -49,20 +52,27 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
             System.out.println("added row");
         }
         variablesTable.setModel(model);
+        
+        
     }
 
     public void iniciovanieStavu() {
-        for (int riadok = 0; riadok < model.getRowCount(); riadok++) {
-            try {
+       
+              for (int riadok = 0; riadok < model.getRowCount(); riadok++) {
+     try {       
                 int hodnota = (int) Integer.valueOf(model.getValueAt(riadok, 1).toString());
                 String premenna = model.getValueAt(riadok, 0).toString();
                 System.out.println(premenna + "   " + hodnota);
+               
                 Stav stav = new Stav();
                 stav.vlozPremennu(premenna, hodnota);
-            } catch (NumberFormatException e) {
-            } catch (NullPointerException e) {
-            }
+                setInicializovaneStavy(true);
+           
+            
+        }  catch (NumberFormatException | NullPointerException e) {
+              //  setInicializovaneStavy(false);
         }
+    }
     }
 
     /**
@@ -83,6 +93,11 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("Zadajte premenné"); // NOI18N
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         variablesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,6 +133,11 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
                 btn_UlozPremenne(evt);
             }
         });
+        buttonSave.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                buttonSaveKeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("Analýza našla nasledujúce premenné. Môžete im priradiť počiatočnú hodnotu v stave s0.");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -151,13 +171,41 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_UlozPremenne(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_UlozPremenne
+        
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
+        
     }//GEN-LAST:event_btn_UlozPremenne
+
+    private void buttonSaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buttonSaveKeyPressed
+
+    }//GEN-LAST:event_buttonSaveKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    }//GEN-LAST:event_formKeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable variablesTable;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the inicializovaneStavy
+     */
+    public Boolean getInicializovaneStavy() {
+        return inicializovaneStavy;
+    }
+
+    /**
+     * @param inicializovaneStavy the inicializovaneStavy to set
+     */
+    public void setInicializovaneStavy(Boolean inicializovaneStavy) {
+        this.inicializovaneStavy = inicializovaneStavy;
+    }
+
+  
+
+   
 }

@@ -19,8 +19,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Export {
         private String adresa;
     
-    public Export() throws IOException{
+    public Export(Boolean inicializovaneStavy) throws IOException{
         Krok krok = new Krok();
+        
         
         System.out.println();
     
@@ -40,8 +41,16 @@ public class Export {
             
             for(int index = 0; index < Vykonavanie.getInstance().getKroky().size();index ++){
             
-            String[] slova = krok.stringPreVypis(index); 
-            for (String slovo : slova) {
+            String[] slova = krok.stringPreVypis(index,inicializovaneStavy);            
+            String slovo;
+            
+            int posunVypisu = 0;
+            if (index != 0){
+            posunVypisu = 2;
+            }
+            
+            for (int i = (slova.length-1)-posunVypisu; i>-1; i--){
+            slovo = slova[i];
             writer.write(slovo);
             writer.newLine();
             }

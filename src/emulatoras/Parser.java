@@ -6,8 +6,8 @@ package emulatoras;
 
 import sk.tuke.emulatoras.instrukcia.Push;
 import sk.tuke.emulatoras.instrukcia.Sub;
-import sk.tuke.emulatoras.instrukcia.Cond;
-import sk.tuke.emulatoras.instrukcia.Mult;
+import sk.tuke.emulatoras.instrukcia.Branch;
+import sk.tuke.emulatoras.instrukcia.Mul;
 import sk.tuke.emulatoras.instrukcia.Store;
 import sk.tuke.emulatoras.instrukcia.False;
 import sk.tuke.emulatoras.instrukcia.EmptyOp;
@@ -34,23 +34,25 @@ import java.util.regex.Pattern;
 public class Parser {
 
     private List<Instrukcia> instrukcie = new ArrayList<Instrukcia>();
-
+    private Boolean inicializaciaStavov;
+    
     public Parser() {
         instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
         instrukcie.add(new And());
-        instrukcie.add(new Cond());
+        instrukcie.add(new Branch());
         instrukcie.add(new EmptyOp());
         instrukcie.add(new Eq());
         instrukcie.add(new False());
         instrukcie.add(new Fetch());
         instrukcie.add(new Le());
-        instrukcie.add(new Mult());
+        instrukcie.add(new Mul());
         instrukcie.add(new Neg());
         instrukcie.add(new Push());
         instrukcie.add(new Store());
         instrukcie.add(new Sub());
         instrukcie.add(new True());
         instrukcie.add(new Loop());
+       
     }
 
     public void parse(String kod) throws MyParserException {
@@ -153,12 +155,15 @@ public class Parser {
                 zasobnik_po[--i] = zasobnik;
             }
         }
+        
+        
+         int stav_po = s.stavy.size();
+         
+         String[] premenne_po = {"Žiadne premenné"};
+         
 
-        int stav_po = s.stavy.size();
-
-        String[] premenne_po = {"Žiadne premenné"};
-
-        if (stav_po > 0) {
+     //   if (stav_po > 0) {
+          if (!s.stavy.isEmpty()) {
             Hashtable<String, Integer> premenne = s.stavy.get(stav_po - 1);
             premenne_po = new String[premenne.size()];
             i = 0;
@@ -168,6 +173,20 @@ public class Parser {
         }
 
         vykonavanie.addKrok(prikaz, stav_po, premenne_po, zasobnik_po);
+    }
+
+    /**
+     * @return the inicializaciaStavov
+     */
+    public Boolean getInicializaciaStavov() {
+        return inicializaciaStavov;
+    }
+
+    /**
+     * @param inicializaciaStavov the inicializaciaStavov to set
+     */
+    public void setInicializaciaStavov(Boolean inicializaciaStavov) {
+        this.inicializaciaStavov = inicializaciaStavov;
     }
 }
 

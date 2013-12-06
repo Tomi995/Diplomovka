@@ -6,8 +6,8 @@ package emulatoras;
 
 import sk.tuke.emulatoras.instrukcia.Push;
 import sk.tuke.emulatoras.instrukcia.Sub;
-import sk.tuke.emulatoras.instrukcia.Cond;
-import sk.tuke.emulatoras.instrukcia.Mult;
+import sk.tuke.emulatoras.instrukcia.Branch;
+import sk.tuke.emulatoras.instrukcia.Mul;
 import sk.tuke.emulatoras.instrukcia.Store;
 import sk.tuke.emulatoras.instrukcia.False;
 import sk.tuke.emulatoras.instrukcia.EmptyOp;
@@ -39,13 +39,13 @@ public class Analyza {
     public Analyza() {
         instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
         instrukcie.add(new And());
-        instrukcie.add(new Cond());
+        instrukcie.add(new Branch());
         instrukcie.add(new EmptyOp());
         instrukcie.add(new Eq());
         instrukcie.add(new False());
         instrukcie.add(new Fetch());
         instrukcie.add(new Le());
-        instrukcie.add(new Mult());
+        instrukcie.add(new Mul());
         instrukcie.add(new Neg());
         instrukcie.add(new Push());
         instrukcie.add(new Store());
