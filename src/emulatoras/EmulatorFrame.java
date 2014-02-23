@@ -22,43 +22,46 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Vytvorenie používateľského rozhrania.
  *
  * @author Tomi
  */
 public class EmulatorFrame extends javax.swing.JFrame {
 
-    private Analyza analyza;     //vlozeny kod
+    private Analyza analyza;
     private Parser parser;
     private Save save;
     private InicializaciaPremennychFrame premenneFrame;
     private Boolean ulozenyText;
     private boolean inicializaciaStavov;
-   
 
-    private void enableFrame() {
+    /**
+     * Zobrazí hlavné okno.
+     */
+    private void zobrazitOkno() {
         this.setEnabled(true);
-        
     }
 
-    private void showPremenneFrame(List<String> premenne) {
+    /**
+     * Vytvorenie okna s premennými.
+     *
+     * @param premenne
+     */
+    private void ukazPremenneFrame(List<String> premenne) {
         this.setEnabled(false);
         setInicializaciaStavov(false);
         premenneFrame = new InicializaciaPremennychFrame(premenne);
         premenneFrame.addWindowListener(new WindowAdapter() {
-        
             @Override
-            public void windowClosing(WindowEvent e) {
-                enableFrame();
+            public void windowClosing(WindowEvent e) {  // definovanie operácii pri zatvoreni okna
+                zobrazitOkno();
             }
         });
-        
         premenneFrame.setVisible(true);
-        
     }
 
-    
     /**
-     * Creates new form EmulatorFrame
+     * Vytvorí nové okno pre Emulátora
      */
     public EmulatorFrame() {
         ulozenyText = true;
@@ -66,10 +69,10 @@ public class EmulatorFrame extends javax.swing.JFrame {
         analyza = new Analyza();     //vlozeny kod
         save = new Save();
         jMenuItem7.setEnabled(false);
-        premenneVisible.setEnabled(false);
+        premenneViditelnost.setEnabled(false);
         setInicializaciaStavov(false);
-        
-        this.addWindowListener(new WindowAdapter() {
+
+        this.addWindowListener(new WindowAdapter() {    // definovanie operácii pri zatvoreni okna
             @Override
             public void windowClosing(WindowEvent we) {
                 if (ulozenyText == true) {
@@ -80,26 +83,29 @@ public class EmulatorFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void ukoncenie(){
-    jDialogExit.setLocationRelativeTo(null);
-    jDialogExit.setVisible(true);
-      }
-    
- /**
- *vymaze vsetky polia pre vystup 
- *  
- */
-    public void vymaz(){
-      toggleAnalyzed(false);
-       premenne_pred.setListData(new String[0]);
-       premenne_po.setListData(new String[0]);
-       zasobnik_pred.setListData(new String [0]);
-       zasobnik_po.setListData(new String [0]);
-       instrukcie.setListData(new String[0]);
-       stav_pred.setText("--");
-       analyza.resetVsetky_premenne();
-       stav_po.setText("--");
+
+    /**
+     * Vyskakovacie okno pred ukončením programu.
+     */
+    public void ukoncenie() {
+        jDialogExit.setLocationRelativeTo(null);
+        jDialogExit.setVisible(true);
+    }
+
+    /**
+     * Vymaže všetky polia pre výstup.
+     *
+     */
+    public void vymaz() {
+        viditelnostTlacidlaAnalyzy(false);
+        premenne_pred.setListData(new String[0]);
+        premenne_po.setListData(new String[0]);
+        zasobnik_pred.setListData(new String[0]);
+        zasobnik_po.setListData(new String[0]);
+        instrukcie.setListData(new String[0]);
+        stav_pred.setText("--");
+        analyza.resetVsetky_premenne();
+        stav_po.setText("--");
     }
 
     /**
@@ -117,12 +123,12 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButtonľ = new javax.swing.JButton();
-        btn_preloz = new javax.swing.JButton();
+        btn_vykonaj = new javax.swing.JButton();
         btn_analyzuj = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         kod = new javax.swing.JTextArea();
-        status_bar = new javax.swing.JLabel();
+        stavovyRiadok = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         instrukcie = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
@@ -146,7 +152,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         premenne_po = new javax.swing.JList();
         jLabel8 = new javax.swing.JLabel();
-        premenneVisible = new javax.swing.JButton();
+        premenneViditelnost = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -177,14 +183,14 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jButton1.setText("Ano");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_Exit_Ano(evt);
+                btn_UkoncenieAno(evt);
             }
         });
 
         jButtonľ.setText("Nie");
         jButtonľ.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_Exit_Nie(evt);
+                btn_UkoncenieNie(evt);
             }
         });
         jButtonľ.addActionListener(new java.awt.event.ActionListener() {
@@ -224,18 +230,18 @@ public class EmulatorFrame extends javax.swing.JFrame {
         setTitle("Emulátor AS");
         setResizable(false);
 
-        btn_preloz.setText("Vykonaj");
-        btn_preloz.setEnabled(false);
-        btn_preloz.addActionListener(new java.awt.event.ActionListener() {
+        btn_vykonaj.setText("Vykonaj");
+        btn_vykonaj.setEnabled(false);
+        btn_vykonaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_prelozActionPerformed(evt);
+                btn_Vykonaj(evt);
             }
         });
 
         btn_analyzuj.setText("Analyzuj");
         btn_analyzuj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_analyzujMouseAction(evt);
+                btn_analyzujAkcia(evt);
             }
         });
 
@@ -247,13 +253,13 @@ public class EmulatorFrame extends javax.swing.JFrame {
         kod.setRows(5);
         kod.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                kodKeyTyped(evt);
+                zmenaKodu(evt);
             }
         });
         jScrollPane1.setViewportView(kod);
 
-        status_bar.setForeground(new java.awt.Color(102, 102, 102));
-        status_bar.setText("Pripravený");
+        stavovyRiadok.setForeground(new java.awt.Color(102, 102, 102));
+        stavovyRiadok.setText("Pripravený");
 
         instrukcie.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         instrukcie.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -268,14 +274,14 @@ public class EmulatorFrame extends javax.swing.JFrame {
         btn_step_back.setText("<");
         btn_step_back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_step_backActionPerformed(evt);
+                btn_krokSpat(evt);
             }
         });
 
         btn_step_forward.setText(">");
         btn_step_forward.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_step_forwardActionPerformed(evt);
+                btn_krokDopredu(evt);
             }
         });
 
@@ -398,10 +404,10 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        premenneVisible.setText("Premenne v stave s0");
-        premenneVisible.addActionListener(new java.awt.event.ActionListener() {
+        premenneViditelnost.setText("Premenne v stave s0");
+        premenneViditelnost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                premenneVisibleActionPerformed(evt);
+                premenneViditelnostActionPerformed(evt);
             }
         });
 
@@ -430,7 +436,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem3.setText("Uložiť");
         jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_Save(evt);
+                btn_Uloz(evt);
             }
         });
         jMenu2.add(jMenuItem3);
@@ -439,7 +445,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem4.setText("Uložiť ako");
         jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_SaveAs(evt);
+                btn_UlozAko(evt);
             }
         });
         jMenu2.add(jMenuItem4);
@@ -460,7 +466,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem6.setText("Ukončiť");
         jMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_exit(evt);
+                btn_Ukoncenie(evt);
             }
         });
         jMenu2.add(jMenuItem6);
@@ -483,7 +489,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stavovyRiadok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -497,14 +503,14 @@ public class EmulatorFrame extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(btn_analyzuj)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btn_preloz)
+                                                .addComponent(btn_vykonaj)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btn_step_back)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btn_step_forward)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(premenneVisible)
+                                            .addComponent(premenneViditelnost)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -529,12 +535,12 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_analyzuj)
-                    .addComponent(btn_preloz)
+                    .addComponent(btn_vykonaj)
                     .addComponent(btn_step_back)
                     .addComponent(btn_step_forward)
-                    .addComponent(premenneVisible))
+                    .addComponent(premenneViditelnost))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(status_bar)
+                .addComponent(stavovyRiadok)
                 .addGap(6, 6, 6))
         );
 
@@ -542,19 +548,32 @@ public class EmulatorFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setStatusBarText(String text) {
-        status_bar.setText(text);
+    /**
+     * Vloží text do stavového riadku.
+     *
+     * @param text
+     */
+    private void setStavovyRiadok(String text) {
+        stavovyRiadok.setText(text);
     }
 
-    private void toggleAnalyzed(boolean analyzed) {
+    /**
+     * Nastaví tlačidlo analýzy a vykonania.
+     *
+     * @param analyzed
+     */
+    private void viditelnostTlacidlaAnalyzy(boolean analyzed) {
         if (analyzed) {
-            setStatusBarText("Analýza OK, stlačte prelož pre preklad.");
+            setStavovyRiadok("Analýza OK, stlačte prelož pre preklad.");
         }
-        btn_preloz.setEnabled(analyzed);
+        btn_vykonaj.setEnabled(analyzed);
         btn_analyzuj.setEnabled(!analyzed);
     }
 
-    private void fillInstructions() {
+    /**
+     * Vyplní list inštrukciami.
+     */
+    private void vyplnitInstrukcie() {
         Vykonavanie v = Vykonavanie.getInstance();
         Krok[] kroky = new Krok[v.getKroky().size()];
         int i = 0;
@@ -564,6 +583,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
         instrukcie.setListData(kroky);
     }
 
+    /**
+     * Obnoví všetky polia patriace k inštrukcii potrebne pre výpis.
+     */
     private void updateSelection() {
         int index = instrukcie.getSelectedIndex();
         if (index == -1) {
@@ -571,51 +593,58 @@ public class EmulatorFrame extends javax.swing.JFrame {
         }
         Vykonavanie v = Vykonavanie.getInstance();
         Krok k = v.getKroky().get(index);
-
-        
-        
         premenne_pred.setListData(k.getPremenne());
         zasobnik_pred.setListData(k.getZasobnik());
-      stav_pred.setText("s" + (k.getStav()));
-        if(isInicializaciaStavov()){
-        stav_pred.setText("s" + (k.getStav()-1));
-      }
-       
+        stav_pred.setText("s" + (k.getStav()));
+        if (isInicializaciaStavov()) {
+            stav_pred.setText("s" + (k.getStav() - 1));
+        }
         if (index < v.getKroky().size() - 1) {
             k = v.getKroky().get(index + 1);
         }
-
         premenne_po.setListData(k.getPremenne());
         zasobnik_po.setListData(k.getZasobnik());
-       
         stav_po.setText("s" + (k.getStav()));
-        if(isInicializaciaStavov()){
-        stav_po.setText("s" + (k.getStav()-1));
-      }
-    
-    
+
+        if (isInicializaciaStavov()) {
+            stav_po.setText("s" + (k.getStav() - 1));
+        }
     }
 
-    private void kodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodKeyTyped
-        toggleAnalyzed(false);
+    /**
+     * Po stlačení ľubovoľného tlačidla sa mohol zmeniť vstupný kód a preto je
+     * potrebná opätovná analýza.
+     *
+     * @param evt
+     */
+    private void zmenaKodu(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_zmenaKodu
+        viditelnostTlacidlaAnalyzy(false);
         ulozenyText = false;
         jMenuItem7.setEnabled(false);
-        premenneVisible.setEnabled(false);
-    }//GEN-LAST:event_kodKeyTyped
+        premenneViditelnost.setEnabled(false);
+    }//GEN-LAST:event_zmenaKodu
 
     private void instrukcieValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_instrukcieValueChanged
         updateSelection();
     }//GEN-LAST:event_instrukcieValueChanged
-
-    private void btn_step_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_step_backActionPerformed
+    /**
+     * Tlačidlo nasledujúcej inštrukcie.
+     *
+     * @param evt
+     */
+    private void btn_krokSpat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_krokSpat
         int index = instrukcie.getSelectedIndex() - 1;
         if (index < 0) {
             index = 0;
         }
         instrukcie.setSelectedIndex(index);
-    }//GEN-LAST:event_btn_step_backActionPerformed
-
-    private void btn_step_forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_step_forwardActionPerformed
+    }//GEN-LAST:event_btn_krokSpat
+    /**
+     * Tlačidlo predchádzajúcej inštrukcie.
+     *
+     * @param evt
+     */
+    private void btn_krokDopredu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_krokDopredu
         int index = instrukcie.getSelectedIndex();
 
         if (index == -1) {
@@ -624,40 +653,49 @@ public class EmulatorFrame extends javax.swing.JFrame {
             index++;
         }
         instrukcie.setSelectedIndex(index);
-    }//GEN-LAST:event_btn_step_forwardActionPerformed
-
-    private void btn_Save(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Save
+    }//GEN-LAST:event_btn_krokDopredu
+    /**
+     * Tlačidlo pre uloženie vstupných inštrukcií.
+     *
+     * @param evt
+     */
+    private void btn_Uloz(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Uloz
         String text = kod.getText();
         try {
             save.save(text);
             ulozenyText = true;
-            setStatusBarText("Súbor uložený: " + save.getAdresa() );
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
         } catch (FileNotFoundException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (IOException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (NullPointerException ex) {
         }
-    }//GEN-LAST:event_btn_Save
-
-    private void btn_SaveAs(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SaveAs
+    }//GEN-LAST:event_btn_Uloz
+    /**
+     * Tlačidlo pre uloženie vstupných inštrukcií s voľbou umiestnenia a nazvu.
+     *
+     * @param evt
+     */
+    private void btn_UlozAko(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_UlozAko
         String text = kod.getText();
         try {
             save.saveAs(text);
             ulozenyText = true;
-            setStatusBarText("Súbor uložený: " + save.getAdresa() );
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
         } catch (FileNotFoundException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (IOException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (NullPointerException ex) {
         }
-
-
-
-    }//GEN-LAST:event_btn_SaveAs
-
-    private void btn_prelozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prelozActionPerformed
+    }//GEN-LAST:event_btn_UlozAko
+    /**
+     * Tlacidlo vykonania kódu.
+     *
+     * @param evt
+     */
+    private void btn_Vykonaj(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Vykonaj
         Vykonavanie v = Vykonavanie.getInstance();
         Stav.clear();
         Zasobnik z = Zasobnik.getZasobnik();
@@ -666,57 +704,54 @@ public class EmulatorFrame extends javax.swing.JFrame {
         if (analyza.getVsetky_premenne().size() > 0) {
             premenneFrame.iniciovanieStavu();
         }
-        
-      
-        try{
+        try {
             setInicializaciaStavov(premenneFrame.getInicializovaneStavy());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             setInicializaciaStavov(false);
         }
-        
         try {
-
             parser = new Parser();
             parser.setInicializaciaStavov(isInicializaciaStavov());
-           
             parser.parse(kod.getText());
-           
             parser.log("<KONIEC>");
-            fillInstructions();
-            toggleAnalyzed(false);
-            setStatusBarText("OK");
+            vyplnitInstrukcie();
+            viditelnostTlacidlaAnalyzy(false);
+            setStavovyRiadok("OK");
             jMenuItem7.setEnabled(true);
         } catch (StavException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
             vymaz();
         } catch (ZasobnikException ex) {
-            setStatusBarText(ex.getMessage());
-            toggleAnalyzed(false);
-             vymaz();
-        } catch (MyParserException ex) {
-            setStatusBarText(ex.getMessage());
-            toggleAnalyzed(false);
-             vymaz();
-        
-         }catch (StackOverflowError ex){
-            setStatusBarText("Nekonecny cyklus.");
+            setStavovyRiadok(ex.getMessage());
+            viditelnostTlacidlaAnalyzy(false);
             vymaz();
-            toggleAnalyzed(false);
+        } catch (MyParserException ex) {
+            setStavovyRiadok(ex.getMessage());
+            viditelnostTlacidlaAnalyzy(false);
+            vymaz();
+        } catch (StackOverflowError ex) {
+            setStavovyRiadok("Nekonecny cyklus.");
+            vymaz();
+            viditelnostTlacidlaAnalyzy(false);
         }
-    }//GEN-LAST:event_btn_prelozActionPerformed
-
+    }//GEN-LAST:event_btn_Vykonaj
+    /**
+     * Tlačidlo pre otvorenie súboru.
+     *
+     * @param evt
+     */
     private void btn_Open(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Open
         try {
             Open open = new Open();
             kod.setText(open.getKod());
             save.setAdresa(open.getAdresa());
-            setStatusBarText("Súbor uložený: " + save.getAdresa());
-            toggleAnalyzed(false);
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
+            viditelnostTlacidlaAnalyzy(false);
             vymaz();
         } catch (FileNotFoundException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (IOException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (NullPointerException ex) {
         }
     }//GEN-LAST:event_btn_Open
@@ -724,77 +759,100 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private void jButtonľActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonľActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonľActionPerformed
-
-    private void btn_exit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exit
+    /**
+     * Tlačidlo pre ukončenie programu.
+     *
+     * @param evt
+     */
+    private void btn_Ukoncenie(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Ukoncenie
         if (ulozenyText == false) {
             ukoncenie();
         } else {
             System.exit(0);
         }
-    }//GEN-LAST:event_btn_exit
-
-    private void btn_Exit_Ano(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Exit_Ano
-     String text = kod.getText();
+    }//GEN-LAST:event_btn_Ukoncenie
+    /**
+     * Tlačidlo pre potvrdenie ukončenia (ANO)
+     *
+     * @param evt
+     */
+    private void btn_UkoncenieAno(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_UkoncenieAno
+        String text = kod.getText();
         try {
             jDialogExit.setVisible(false);
             save.saveAs(text);
             ulozenyText = true;
             System.exit(0);
-            setStatusBarText("Súbor uložený: " + save.getAdresa() );
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
         } catch (FileNotFoundException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (IOException ex) {
-            setStatusBarText(ex.getMessage());
+            setStavovyRiadok(ex.getMessage());
         } catch (NullPointerException ex) {
         }
-    }//GEN-LAST:event_btn_Exit_Ano
-
-    private void btn_Exit_Nie(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Exit_Nie
-      System.exit(0);
-    }//GEN-LAST:event_btn_Exit_Nie
-
-    private void btn_analyzujMouseAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_analyzujMouseAction
-          try {
-              analyza.resetVsetky_premenne();
-              analyza.iniciuj(kod.getText());
-              
+    }//GEN-LAST:event_btn_UkoncenieAno
+    /**
+     * Tlačidlo pre potvrdenie ukončenia (NIE)
+     *
+     * @param evt
+     */
+    private void btn_UkoncenieNie(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_UkoncenieNie
+        System.exit(0);
+    }//GEN-LAST:event_btn_UkoncenieNie
+    /**
+     * Tlačidlo pre spustenie analýzy.
+     *
+     * @param evt
+     */
+    private void btn_analyzujAkcia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_analyzujAkcia
+        try {
+            analyza.resetVsetky_premenne();
+            analyza.iniciuj(kod.getText());
             if (analyza.getVsetky_premenne().size() > 0) {
-                showPremenneFrame(analyza.getVsetky_premenne());
-                premenneVisible.setEnabled(true);
-               setInicializaciaStavov(false);
+                ukazPremenneFrame(analyza.getVsetky_premenne());
+                premenneViditelnost.setEnabled(true);
+                setInicializaciaStavov(false);
             }
-            
-            toggleAnalyzed(true);
+            viditelnostTlacidlaAnalyzy(true);
         } catch (MyParserException ex) {
-            setStatusBarText(ex.getMessage());
-            toggleAnalyzed(false);
+            setStavovyRiadok(ex.getMessage());
+            viditelnostTlacidlaAnalyzy(false);
         }
-    }//GEN-LAST:event_btn_analyzujMouseAction
+    }//GEN-LAST:event_btn_analyzujAkcia
 
+    /**
+     * Vytvorí nový projekt.
+     *
+     * @param evt
+     */
     private void btn_Novy(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Novy
-       
-       kod.setText("");
-       vymaz();
-     
-      
+        kod.setText("");
+        vymaz();
     }//GEN-LAST:event_btn_Novy
 
-    private void premenneVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_premenneVisibleActionPerformed
+    /**
+     * Nastavenie viditeľnosti pre tlačidlá.
+     *
+     * @param evt
+     */
+    private void premenneViditelnostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_premenneViditelnostActionPerformed
         premenneFrame.setVisible(true);
-    }//GEN-LAST:event_premenneVisibleActionPerformed
+    }//GEN-LAST:event_premenneViditelnostActionPerformed
 
+    /**
+     * Tlačidlo pre exportovanie programu.
+     *
+     * @param evt
+     */
     private void btn_Export(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Export
         Krok krok = new Krok();
-            krok.setInicializovanyStavNula(inicializaciaStavov);
-        
+        krok.setInicializovanyStavNula(inicializaciaStavov);
         try {
-            
             Export export = new Export(isInicializaciaStavov());
-            
-            setStatusBarText("Súbor exportovaný: " + export.getAdresa() );
+            setStavovyRiadok("Súbor exportovaný: " + export.getAdresa());
         } catch (IOException | NullPointerException ex) {
-            setStatusBarText(ex.getMessage());
-            }
+            setStavovyRiadok(ex.getMessage());
+        }
     }//GEN-LAST:event_btn_Export
 
     /**
@@ -824,7 +882,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              EmulatorFrame emulatorFrame =  new EmulatorFrame();
+                EmulatorFrame emulatorFrame = new EmulatorFrame();
                 emulatorFrame.setVisible(true);
                 emulatorFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             }
@@ -832,9 +890,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_analyzuj;
-    private javax.swing.JButton btn_preloz;
     private javax.swing.JButton btn_step_back;
     private javax.swing.JButton btn_step_forward;
+    private javax.swing.JButton btn_vykonaj;
     private javax.swing.JList instrukcie;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonľ;
@@ -872,12 +930,12 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTextArea kod;
-    private javax.swing.JButton premenneVisible;
+    private javax.swing.JButton premenneViditelnost;
     private javax.swing.JList premenne_po;
     private javax.swing.JList premenne_pred;
-    private javax.swing.JLabel status_bar;
     private javax.swing.JLabel stav_po;
     private javax.swing.JLabel stav_pred;
+    private javax.swing.JLabel stavovyRiadok;
     private javax.swing.JList zasobnik_po;
     private javax.swing.JList zasobnik_pred;
     // End of variables declaration//GEN-END:variables
@@ -895,9 +953,4 @@ public class EmulatorFrame extends javax.swing.JFrame {
     public void setInicializaciaStavov(boolean inicializaciaStavov) {
         this.inicializaciaStavov = inicializaciaStavov;
     }
-
-
-
-  
-   
 }

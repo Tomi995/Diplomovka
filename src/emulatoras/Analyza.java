@@ -25,6 +25,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Amalyzuje vstupný kód, zistí lexikálne chyby a vyhľadá všetky premenné
+ * použité vo vstupnom kóde.
  *
  * @author Tomi
  */
@@ -37,7 +39,7 @@ public class Analyza {
     private Stav inicializacia = new Stav();
 
     public Analyza() {
-        instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
+        instrukcie.add(new Add());                  //vlozenie vsetkych regexp do listu
         instrukcie.add(new And());
         instrukcie.add(new Branch());
         instrukcie.add(new EmptyOp());
@@ -54,16 +56,22 @@ public class Analyza {
         instrukcie.add(new Loop());
     }
 
+    /**
+     * Po úspešnom vykonaní syntaktickej kontroly spustí vyhľadávanie
+     * premenných.
+     *
+     * @param text
+     * @throws MyParserException
+     */
     public void iniciuj(String text) throws MyParserException {
         if (kontrola(text)) {
             hladaj(text);
-            System.out.println("preslo parserom");
         }
     }
 
     /**
-     * vyhlada v zadanom kode vsetky premenne (fetch, store) a vytvori z nich
-     * list
+     * Vyhľadá vo vstupnom kóde všetky premenné (fetch-x, store-x) a vytvorí z
+     * nich list
      *
      * @param text
      * @return
@@ -81,12 +89,10 @@ public class Analyza {
                 }
             }
         }
-
-        System.out.println("premenne "+getVsetky_premenne()+"" +getVsetky_premenne().size());      //text na zmazanie
     }
 
     /**
-     * Zisti ci je vlozeny kod syntakticky spravny
+     * Zistí, či je vložený kód syntakticky správny.
      *
      * @param text
      * @return
@@ -146,39 +152,38 @@ public class Analyza {
                 break;
             }
         }
-        
+
         return true;
     }
 
     /**
-     * list premennych vlozi do stavu nula a priradi im pociatocne hodnoty
+     * List premenných vloží do stavu nula a priradí im počiatočné hodnoty.
      *
      * @param vsetkypremenne
      * @return
      */
     public void vlozDoStavu(String premenna, int hodnota) {
-        getInicializacia().vlozPremennu(premenna, hodnota); // treba este vyriesit vlozenie hodnoty
-     
+        getInicializacia().vlozPremennu(premenna, hodnota);
     }
 
     /**
-     * syntakticky test
+     * Otestuje každý vložený príkaz, či je syntakticky správny.
      *
      * @param prikaz
      * @throws MyParserException
      */
     private void skontroluj(String prikaz) throws MyParserException {
 
-        prikaz = prikaz.toUpperCase();                              //potrebujem dorobit......
+        prikaz = prikaz.toUpperCase();
         prikaz = prikaz.replaceAll("\\s", "");
         Boolean skontrolovane = false;                                              //premenna ci sa dany prikaz vykona
 
         for (Instrukcia instr : instrukcie) {
-            Pattern pattern = Pattern.compile(instr.regexp());                            //pattern pre regex
+            Pattern pattern = Pattern.compile(instr.regexp());                            //pattern pre regex každej inštrukcie
             Matcher match = pattern.matcher(prikaz);
 
             if (match.find()) {
-                if (instr.regexp().startsWith("^COND") || instr.regexp().startsWith("^LOOP")) {
+                if (instr.regexp().startsWith("^COND") || instr.regexp().startsWith("^LOOP")) {     // tieto prikazy obsahuju postupnost dalsych tak treba skontrolovat aj tie
                     if (!(kontrola(match.group(1)) && kontrola(match.group(2)))) {
                         throw new MyParserException("chyba v prikaze");
                     }
@@ -193,24 +198,27 @@ public class Analyza {
     }
 
     /**
+     * Vráti všetky premenné.
+     *
      * @return the vsetky_premenne
      */
     public List<String> getVsetky_premenne() {
         return vsetky_premenne;
     }
 
-
-
-     public void resetVsetky_premenne() {
+    /**
+     * Vymaže všetky premenné.
+     */
+    public void resetVsetky_premenne() {
         this.vsetky_premenne.clear();
     }
 
     /**
+     * Vrati inicializačný stav.
+     *
      * @return the inicializacia
      */
     public Stav getInicializacia() {
         return inicializacia;
     }
-    
-   
 }

@@ -7,24 +7,23 @@ package emulatoras;
 import java.util.Hashtable;
 
 /**
+ * Abstraktná trieda pre všetky inštrukcie.
  *
  * @author Tomi
  */
 abstract public class Instrukcia {
 
     /**
-     * vykonanie danej instrukcie
+     * Vykonanie danej inštrukcie.
      *
      * @param instrukcia
      */
     public abstract void vykonaj(String instrukcia) throws MyParserException;
 
     /**
-     * regularny vyraz pre danu instrukciu
+     * Regularny výraz pre danú inštrukciu.
      *
      * @return
      */
     public abstract String regexp();
-
-    public abstract String platnost(); //v povodnom plane sluzilo na zistenie platnosti, asi to uz nevyuzije po zmene navrhu ale este to tu nechavam zmazem az na koniec
 }

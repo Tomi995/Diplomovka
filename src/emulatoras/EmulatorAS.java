@@ -29,7 +29,7 @@ public class EmulatorAS {
         Stav stav = new Stav();
         Branch cond = new Branch();
         Add add = new Add();
-
+  
         push.vykonaj("PUSH-2");
         store.vykonaj("STORE-X");
         push.vykonaj("PUSH-1");

@@ -4,11 +4,9 @@
  */
 package emulatoras;
 
-
-
 /**
- *
- * @author Lenovo
+ * Vytvorenie kroku a priprava pre export.
+ * @author Tomi
  */
 public class Krok {
 
@@ -39,6 +37,8 @@ public class Krok {
     }
 
     /**
+     * Vráti zásobník
+     *
      * @return the zasobnik
      */
     public String[] getZasobnik() {
@@ -46,6 +46,8 @@ public class Krok {
     }
 
     /**
+     * Nastaví zásobník.
+     *
      * @param zasobnik the zasobnik to set
      */
     public void setZasobnik(String[] zasobnik) {
@@ -53,6 +55,8 @@ public class Krok {
     }
 
     /**
+     * Vráti premenné.
+     *
      * @return the premenne
      */
     public String[] getPremenne() {
@@ -60,6 +64,8 @@ public class Krok {
     }
 
     /**
+     * Nastaví premenné.
+     *
      * @param premenne the premenne to set
      */
     public void setPremenne(String[] premenne) {
@@ -67,6 +73,8 @@ public class Krok {
     }
 
     /**
+     * Vráti stav.
+     *
      * @return the stav
      */
     public int getStav() {
@@ -74,19 +82,27 @@ public class Krok {
     }
 
     /**
+     * Nastaví stav.
+     *
      * @param stav the stav to set
      */
     public void setStav(int stav) {
         this.stav = stav;
     }
-    
-    public String[] stringPreVypis(int index,Boolean inicializovanyStavNula){
+
+    /**
+     * Príprava textu pre export. Vytvára sa podľa krokov.
+     *
+     * @param index
+     * @param inicializovanyStavNula
+     * @return
+     */
+    public String[] stringPreVypis(int index, Boolean inicializovanyStavNula) {
         setInicializovanyStavNula(inicializovanyStavNula);
         String[] pole = new String[8];
-        String vypis = "" ;
-        pole[7]="";
-        pole[6]="";
-        
+        String vypis = "";
+        pole[7] = "";
+        pole[6] = "";
         if (index == 0) {
             for (Krok krok : Vykonavanie.getInstance().getKroky()) {
                 vypis += krok.getName() + ":";
@@ -94,18 +110,16 @@ public class Krok {
 
             vypis = (String) vypis.subSequence(0, vypis.length() - 10);
             pole[7] = vypis;
-            pole[6]="---------------------------------------------------------------";
+            pole[6] = "---------------------------------------------------------------";
         }
-       Krok krok = Vykonavanie.getInstance().getKroky().get(index);
+        Krok krok = Vykonavanie.getInstance().getKroky().get(index);
         pole[5] = krok.getName();
-       
-        if(inicializovanyStavNula){
-        pole[4] = "Číslo stavu : s" + (krok.getStav()-1);
-        }else{
-        pole[4] = "Číslo stavu : s" + krok.getStav();
+
+        if (inicializovanyStavNula) {
+            pole[4] = "Číslo stavu : s" + (krok.getStav() - 1);
+        } else {
+            pole[4] = "Číslo stavu : s" + krok.getStav();
         }
-        
-        
         vypis = "Zaobnik pred vykonanim: ";
         String[] z = krok.getZasobnik();
         if (!z.equals("")) {
@@ -117,50 +131,44 @@ public class Krok {
         } else {
             vypis += "Prazdny zasobnik";
         }
-
         pole[3] = vypis;
-
         vypis = "Zasobnik po vykonani: ";
-        if(index != Vykonavanie.getInstance().getKroky().size()-1){
-        z = Vykonavanie.getInstance().getKroky().get(index + 1).getZasobnik();
-        if (!z.equals("")) {
-            int i = z.length;
-            for (String zasobnik : z) {
-                vypis += zasobnik + "; ";
-                --i;
+        if (index != Vykonavanie.getInstance().getKroky().size() - 1) {
+            z = Vykonavanie.getInstance().getKroky().get(index + 1).getZasobnik();
+            if (!z.equals("")) {
+                int i = z.length;
+                for (String zasobnik : z) {
+                    vypis += zasobnik + "; ";
+                    --i;
+                }
+            } else {
+                vypis += "Prazdny zasobnik";
             }
         } else {
-            vypis += "Prazdny zasobnik";
+            z = Vykonavanie.getInstance().getKroky().get(index).getZasobnik();
+            if (!z.equals("")) {
+                int i = z.length;
+                for (String zasobnik : z) {
+                    vypis += zasobnik + "; ";
+                    --i;
+                }
+            } else {
+                vypis += "Prazdny zasobnik";
+            }
         }
-        }else{
-        z = Vykonavanie.getInstance().getKroky().get(index).getZasobnik();
-        if (!z.equals("")) {
-            int i = z.length;
-            for (String zasobnik : z) {
-                vypis += zasobnik + "; ";
-                --i;
-            }
-        } else {
-            vypis += "Prazdny zasobnik";
-        }}
-
         pole[2] = vypis;
-
         vypis = "Premenne v stave: ";
-
         if (!krok.getPremenne().equals("")) {
             int i = 0;
             for (String premenna : krok.getPremenne()) {
-                vypis +="[" + premenna+"]" + "; ";
+                vypis += "[" + premenna + "]" + "; ";
                 i++;
             }
         } else {
             vypis += "Ziadne premenne v danom stave";
         }
-
         pole[1] = vypis;
         pole[0] = "---------------------------------------------------------------";
-
         return pole;
     }
 
@@ -172,6 +180,7 @@ public class Krok {
     }
 
     /**
+     *
      * @param inicializovanyStavNula the inicializovanyStavNula to set
      */
     public void setInicializovanyStavNula(Boolean inicializovanyStavNula) {

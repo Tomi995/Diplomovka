@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
+ * Otvorenie uloženého projektu.
  *
  * @author Tomi
  */
@@ -22,10 +23,17 @@ public class Open {
     private String kod;
     private String adresa;
 
+    /**
+     * Otvorí súbor zo zvoleného adresára.
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws NullPointerException
+     */
     public Open() throws FileNotFoundException, IOException, NullPointerException {
 
         JFileChooser openFile = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.txt)","txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Abstract Machine (*.txt)", "txt");
         openFile.setFileFilter(filter);
         openFile.showOpenDialog(null);
         FileReader reader;
@@ -37,6 +45,8 @@ public class Open {
     }
 
     /**
+     * Vráti kód.
+     *
      * @return the kod
      */
     public String getKod() {
@@ -44,17 +54,26 @@ public class Open {
     }
 
     /**
+     * Nastaví kód.
+     *
      * @param kod the kod to set
      */
     public void setKod(String kod) {
         this.kod = kod;
     }
 
+    /**
+     * vráti adresu otváraného súboru.
+     *
+     * @return
+     */
     public String getAdresa() {
         return adresa;
     }
 
     /**
+     * Uloží adresu otváraného súboru.
+     *
      * @param adresa the adresa to set
      */
     public void setAdresa(String adresa) {

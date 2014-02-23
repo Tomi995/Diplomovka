@@ -12,31 +12,25 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Vytvorenie formulára pre premenné, ktoré môžu byť iniciované.
  *
- * @author Lenovo
+ * @author Tomi
  */
 public class InicializaciaPremennychFrame extends javax.swing.JFrame {
 
     private List<String> premenne;
     private DefaultTableModel model;
     private Boolean inicializovaneStavy = true;
-   
 
     /**
-     * Creates new form InicializaciaPremennychFrame
+     * Vytvorí nový formulár.
      */
     public InicializaciaPremennychFrame(List<String> premenne) {
-       setInicializovaneStavy(false);
+        setInicializovaneStavy(false);
         initComponents();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-      
-
         String[] labels = {"Premenná", "Hodnota"};
-
-        System.out.println(premenne.size() + " size");
-
         model = new DefaultTableModel(labels, 0) {
-            
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 if (mColIndex == 0) {
                     return false;
@@ -44,35 +38,31 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
                 return true;
             }
         };
-
-
         for (String premenna : premenne) {
             String[] row = {premenna, ""};
             model.addRow(row);
             System.out.println("added row");
         }
         variablesTable.setModel(model);
-        
-        
     }
 
+    /**
+     * Vloží inicializačnú hodnotu pre danú premennú do počiatočného stavu.
+     */
     public void iniciovanieStavu() {
-       
-              for (int riadok = 0; riadok < model.getRowCount(); riadok++) {
-     try {       
+
+        for (int riadok = 0; riadok < model.getRowCount(); riadok++) {
+            try {
                 int hodnota = (int) Integer.valueOf(model.getValueAt(riadok, 1).toString());
                 String premenna = model.getValueAt(riadok, 0).toString();
                 System.out.println(premenna + "   " + hodnota);
-               
                 Stav stav = new Stav();
                 stav.vlozPremennu(premenna, hodnota);
                 setInicializovaneStavy(true);
-           
-            
-        }  catch (NumberFormatException | NullPointerException e) {
-              //  setInicializovaneStavy(false);
+            } catch (NumberFormatException | NullPointerException e) {
+                //  setInicializovaneStavy(false);
+            }
         }
-    }
     }
 
     /**
@@ -171,19 +161,16 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_UlozPremenne(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_UlozPremenne
-        
+
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        
+
     }//GEN-LAST:event_btn_UlozPremenne
 
     private void buttonSaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buttonSaveKeyPressed
-
     }//GEN-LAST:event_buttonSaveKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
     }//GEN-LAST:event_formKeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;
     private javax.swing.JLabel jLabel1;
@@ -192,6 +179,8 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
+     * Vráti, či boli stavy inicializované.
+     *
      * @return the inicializovaneStavy
      */
     public Boolean getInicializovaneStavy() {
@@ -199,13 +188,11 @@ public class InicializaciaPremennychFrame extends javax.swing.JFrame {
     }
 
     /**
+     * Inicializuje stavy.
+     *
      * @param inicializovaneStavy the inicializovaneStavy to set
      */
     public void setInicializovaneStavy(Boolean inicializovaneStavy) {
         this.inicializovaneStavy = inicializovaneStavy;
     }
-
-  
-
-   
 }

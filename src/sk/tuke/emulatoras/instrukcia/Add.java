@@ -51,8 +51,6 @@ public class Add extends Instrukcia {
         return "^ADD$";
     }
 
-    @Override
-    public String platnost() {
-        return "^ADD$";
-    }
+   
+    
 }

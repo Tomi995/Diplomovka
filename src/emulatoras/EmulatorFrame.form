@@ -72,7 +72,7 @@
             <Property name="text" type="java.lang.String" value="Ano"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Exit_Ano"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_UkoncenieAno"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton&#x13e;">
@@ -80,7 +80,7 @@
             <Property name="text" type="java.lang.String" value="Nie"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Exit_Nie"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_UkoncenieNie"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton&#x13e;ActionPerformed"/>
           </Events>
         </Component>
@@ -125,7 +125,7 @@
                 <Property name="text" type="java.lang.String" value="Ulo&#x17e;i&#x165;"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Save"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Uloz"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
@@ -136,7 +136,7 @@
                 <Property name="text" type="java.lang.String" value="Ulo&#x17e;i&#x165; ako"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_SaveAs"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_UlozAko"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
@@ -163,7 +163,7 @@
                 <Property name="text" type="java.lang.String" value="Ukon&#x10d;i&#x165;"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_exit"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Ukoncenie"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -211,7 +211,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="status_bar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="stavovyRiadok" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
@@ -225,7 +225,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="btn_analyzuj" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btn_preloz" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btn_vykonaj" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btn_step_back" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -234,7 +234,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="premenneVisible" min="-2" max="-2" attributes="0"/>
+                                          <Component id="premenneViditelnost" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -270,26 +270,26 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_analyzuj" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_preloz" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_vykonaj" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_step_back" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_step_forward" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="premenneVisible" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="premenneViditelnost" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="status_bar" min="-2" max="-2" attributes="0"/>
+              <Component id="stavovyRiadok" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btn_preloz">
+    <Component class="javax.swing.JButton" name="btn_vykonaj">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vykonaj"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_prelozActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_Vykonaj"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_analyzuj">
@@ -297,7 +297,7 @@
         <Property name="text" type="java.lang.String" value="Analyzuj"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_analyzujMouseAction"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_analyzujAkcia"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -324,12 +324,12 @@
             <Property name="rows" type="int" value="5"/>
           </Properties>
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="kodKeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="zmenaKodu"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="status_bar">
+    <Component class="javax.swing.JLabel" name="stavovyRiadok">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="66" type="rgb"/>
@@ -367,7 +367,7 @@
         <Property name="text" type="java.lang.String" value="&lt;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_step_backActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_krokSpat"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_step_forward">
@@ -375,7 +375,7 @@
         <Property name="text" type="java.lang.String" value="&gt;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_step_forwardActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_krokDopredu"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
@@ -629,12 +629,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="premenneVisible">
+    <Component class="javax.swing.JButton" name="premenneViditelnost">
       <Properties>
         <Property name="text" type="java.lang.String" value="Premenne v stave s0"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="premenneVisibleActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="premenneViditelnostActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -26,8 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * rozparsuje prikazy na useky pedzi : ale ponecha vsetky parametre za rikazom
- * ako napr loop-(add:sub,store-x)
+ * Rozdelí vstupný kód na úseky medzi ":" a vykoná jednotlivé inštrukcie
  *
  * @author Tomi
  */
