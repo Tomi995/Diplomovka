@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -13,10 +13,10 @@ import emulatoras.ZasobnikException;
  *
  * @author Tomi
  */
-public class Mul extends Instrukcia {
+public class Mult extends Instrukcia {
 
     /**
-     * vykonanie instrukcie Mult
+     * Vykonanie inštrukcie MULT.
      *
      * @param instrukcia
      */
@@ -29,24 +29,23 @@ public class Mul extends Instrukcia {
         if (Zasobnik.getZasobnik().jeCislo()) {                             //overi ci je prve cislo v zasobniku cislo, priradi ho do premennej a vyhodi zo zasobnika
             prveCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
         } else {
-            throw new ZasobnikException("Zla hodnota v zasobniku");
+            throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu MULT");
         }
         if (Zasobnik.getZasobnik().jeCislo()) {                             //overi ci je druhe cislo v zasobniku cislo, prideli ho do premennej a vyberie zo zasobnika
             druheCislo = Integer.parseInt(Zasobnik.getZasobnik().vyber());
         } else {
-            throw new ZasobnikException("Zla hodnota v zasobniku");
+            throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu MULT");
         }
         vysledok = prveCislo * druheCislo;                                  //vypocita vysledok a vlozi ho do zasobnika
         Zasobnik.getZasobnik().vloz(vysledok);
     }
 
+    /**
+     * Regulárny výraz pre funkciu MUL.
+     * @return 
+     */
     @Override
     public String regexp() {
-        return "^MUL$";
-    }
-
-    @Override
-    public String platnost() {
-        return "^MUL$";
+        return "^MULT$";
     }
 }

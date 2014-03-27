@@ -120,52 +120,71 @@ public class Krok {
         } else {
             pole[4] = "Číslo stavu : s" + krok.getStav();
         }
-        vypis = "Zaobnik pred vykonanim: ";
+        vypis = "Zásobník pred vykonaním: ";
         String[] z = krok.getZasobnik();
         if (!z.equals("")) {
+            
             int i = z.length;
             for (String zasobnik : z) {
-                vypis += zasobnik + "; ";
+                
+                vypis += zasobnik ;
+                if(i != 1){
+                    vypis +=  ": ";
+                    }
                 --i;
             }
         } else {
-            vypis += "Prazdny zasobnik";
+            vypis += "Prázdny zásobník";
         }
         pole[3] = vypis;
-        vypis = "Zasobnik po vykonani: ";
+        vypis = "Zásobník po vykonaní: ";
         if (index != Vykonavanie.getInstance().getKroky().size() - 1) {
             z = Vykonavanie.getInstance().getKroky().get(index + 1).getZasobnik();
             if (!z.equals("")) {
                 int i = z.length;
                 for (String zasobnik : z) {
-                    vypis += zasobnik + "; ";
-                    --i;
+                      
+                vypis += zasobnik ;
+                if(i != 1){
+                    vypis +=  ": ";
+                    }
+                --i;
                 }
             } else {
-                vypis += "Prazdny zasobnik";
+                vypis += "Prázdny zásobník";
             }
         } else {
             z = Vykonavanie.getInstance().getKroky().get(index).getZasobnik();
             if (!z.equals("")) {
                 int i = z.length;
                 for (String zasobnik : z) {
-                    vypis += zasobnik + "; ";
-                    --i;
+                       
+                vypis += zasobnik ;
+                if(i != 1){
+                    vypis +=  ": ";
+                    }
+                --i;
                 }
             } else {
-                vypis += "Prazdny zasobnik";
+                vypis += "Prázdny zásobník";
             }
         }
         pole[2] = vypis;
-        vypis = "Premenne v stave: ";
+        vypis = "Premenné v stave: ";
         if (!krok.getPremenne().equals("")) {
-            int i = 0;
+            int i = krok.getPremenne().length;
             for (String premenna : krok.getPremenne()) {
-                vypis += "[" + premenna + "]" + "; ";
-                i++;
+                vypis += "[" + premenna + "]" ;
+                    
+                
+                if(i != 1){
+                    vypis +=  "; ";
+                    }
+                --i;
+               
             }
         } else {
-            vypis += "Ziadne premenne v danom stave";
+            vypis += "Žiadne premenné v danom stave";
         }
         pole[1] = vypis;
         pole[0] = "---------------------------------------------------------------";

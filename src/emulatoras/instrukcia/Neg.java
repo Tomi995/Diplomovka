@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -17,6 +17,11 @@ import java.util.logging.Logger;
  */
 public class Neg extends Instrukcia {
 
+    /**
+     * Vykonanie inštrukcie NEG.
+     * @param instrukcia
+     * @throws MyParserException 
+     */
     @Override
     public void vykonaj(String instrukcia) throws MyParserException {
         String vysledok = "";                                                   //premenna pre vysledok
@@ -27,17 +32,18 @@ public class Neg extends Instrukcia {
             } else {
                 vysledok = "TRUE";
             }
+             Zasobnik.getZasobnik().vloz(vysledok);                         //vlozi vysledok do zasobnika
         }
-        Zasobnik.getZasobnik().vloz(vysledok);                              //vlozi vysledok do zasobnika
+        else throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu NEG");
+                                     
     }
 
+    /**
+     * Regulárny výraz pre funkciu NEG.
+     * @return 
+     */
     @Override
     public String regexp() {
-        return "^NEG$";
-    }
-
-    @Override
-    public String platnost() {
         return "^NEG$";
     }
 }

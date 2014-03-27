@@ -10,13 +10,15 @@ import java.util.List;
 import javax.swing.text.DefaultEditorKit;
 
 /**
- * trieda pre spravovanie stavov
+ * Trieda pre spravovanie stavov.
  *
  * @author Tomi
  */
-public class Stav {
+public class Stav  {
 
-    //hashtable pre premennu a jej hodnotu- stav
+    /**
+     * Vytvorí tabuľku pre stavy a ich hodnoty
+     */
     public static final List<Hashtable> stavy = new ArrayList<Hashtable>();                  //List vsetkych stavov 
 
     public static void clear() {
@@ -24,7 +26,7 @@ public class Stav {
     }
 
     /**
-     * vlozi premennu do stavu nula bez jeho aktuaizacie
+     * Vloží premennu do stavu nula bez aktuaizácie stavu
      *
      * @param premenna
      * @param hodnota
@@ -37,14 +39,13 @@ public class Stav {
             stav.put(premenna, hodnota);            //vlozi premennu s hodnotou do stavu
             stavy.add(stav);
         } else {
-            //ak uz stav nula existuje tak don vlozi premenne
-
+                                                    //ak uz stav nula existuje tak don vlozi premenne
             stavy.get(0).put(premenna, hodnota);     //vlozi premennu s hodnotou do stavu
         }
     }
 
     /**
-     * vlozi konkretnej premennej v stave hodnotu a aktualizuje stav
+     * Aktualizuje stav a danej premennej priradí konkrétnu hodnotu.
      *
      * @param premenna
      * @param hodnota
@@ -64,7 +65,7 @@ public class Stav {
     }
 
     /**
-     * vrati hodnotu premennej v poslednom
+     * Vráti hodnotu premennej v poslednom stave.
      *
      * @param premenna
      * @param stav
@@ -81,7 +82,7 @@ public class Stav {
 
         } catch (IndexOutOfBoundsException | NullPointerException ex) {
         }
-        throw new StavException("Premenna " + premenna + " nema hodnotu v danom stave");
+        throw new StavException("Premenná " + premenna + " nemá hodnotu v danom stave");
 
     }
 }

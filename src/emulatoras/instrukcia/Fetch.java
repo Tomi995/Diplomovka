@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -21,6 +21,11 @@ import java.util.regex.Pattern;
  */
 public class Fetch extends Instrukcia {
 
+    /**
+     * Vykonanie inštrukcie FETCH.
+     * @param instrukcia
+     * @throws MyParserException 
+     */
     @Override
     public void vykonaj(String instrukcia) throws MyParserException {
         String premenna;
@@ -42,13 +47,12 @@ public class Fetch extends Instrukcia {
 
     }
 
+    /**
+     * Regulárny výraz pre funkciu FETCH.
+     * @return 
+     */
     @Override
     public String regexp() {
-        return "^FETCH-(([A-Z])+)$";
-    }
-
-    @Override
-    public String platnost() {
         return "^FETCH-(([A-Z])+)$";
     }
 }

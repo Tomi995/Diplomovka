@@ -4,28 +4,28 @@
  */
 package emulatoras;
 
-import sk.tuke.emulatoras.instrukcia.Push;
-import sk.tuke.emulatoras.instrukcia.Sub;
-import sk.tuke.emulatoras.instrukcia.Branch;
-import sk.tuke.emulatoras.instrukcia.Mul;
-import sk.tuke.emulatoras.instrukcia.Store;
-import sk.tuke.emulatoras.instrukcia.False;
-import sk.tuke.emulatoras.instrukcia.EmptyOp;
-import sk.tuke.emulatoras.instrukcia.Eq;
-import sk.tuke.emulatoras.instrukcia.Fetch;
-import sk.tuke.emulatoras.instrukcia.Loop;
-import sk.tuke.emulatoras.instrukcia.Neg;
-import sk.tuke.emulatoras.instrukcia.True;
-import sk.tuke.emulatoras.instrukcia.And;
-import sk.tuke.emulatoras.instrukcia.Le;
-import sk.tuke.emulatoras.instrukcia.Add;
+import emulatoras.instrukcia.Push;
+import emulatoras.instrukcia.Sub;
+import emulatoras.instrukcia.Branch;
+import emulatoras.instrukcia.Mult;
+import emulatoras.instrukcia.Store;
+import emulatoras.instrukcia.False;
+import emulatoras.instrukcia.EmptyOp;
+import emulatoras.instrukcia.Eq;
+import emulatoras.instrukcia.Fetch;
+import emulatoras.instrukcia.Loop;
+import emulatoras.instrukcia.Neg;
+import emulatoras.instrukcia.True;
+import emulatoras.instrukcia.And;
+import emulatoras.instrukcia.Le;
+import emulatoras.instrukcia.Add;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Amalyzuje vstupný kód, zistí lexikálne chyby a vyhľadá všetky premenné
+ * Amalyzuje vstupný kód, zistí syntaktické chyby a vyhľadá všetky premenné
  * použité vo vstupnom kóde.
  *
  * @author Tomi
@@ -47,7 +47,7 @@ public class Analyza {
         instrukcie.add(new False());
         instrukcie.add(new Fetch());
         instrukcie.add(new Le());
-        instrukcie.add(new Mul());
+        instrukcie.add(new Mult());
         instrukcie.add(new Neg());
         instrukcie.add(new Push());
         instrukcie.add(new Store());
@@ -140,7 +140,7 @@ public class Analyza {
                                 }
                             }
                         } catch (Exception e) {                               //exception ak su zle zadane zatvorky
-                            throw new MyParserException("Zle ozatvorkovane :" + prikaz);
+                            throw new MyParserException("Zle ozátvorkované :" + prikaz);
                         }
                     } else {                                                 //nacitanie znaku kodu a pridanie do prikazu
                         prikaz = prikaz + c;
@@ -185,15 +185,14 @@ public class Analyza {
             if (match.find()) {
                 if (instr.regexp().startsWith("^COND") || instr.regexp().startsWith("^LOOP")) {     // tieto prikazy obsahuju postupnost dalsych tak treba skontrolovat aj tie
                     if (!(kontrola(match.group(1)) && kontrola(match.group(2)))) {
-                        throw new MyParserException("chyba v prikaze");
+                        throw new MyParserException("Chyba v príkaze");
                     }
                 }
-                System.out.println("kontrola  " + prikaz);
                 skontrolovane = true;
             }
         }
         if (!skontrolovane) {
-            throw new MyParserException("Syntakticka chyba : " + prikaz);
+            throw new MyParserException("Syntaktická chyba : " + prikaz);
         }
     }
 

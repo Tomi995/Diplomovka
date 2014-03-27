@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Lenovo
+ * @author Tomi
  */
 public class Vykonavanie {
 

@@ -4,21 +4,21 @@
  */
 package emulatoras;
 
-import sk.tuke.emulatoras.instrukcia.Push;
-import sk.tuke.emulatoras.instrukcia.Sub;
-import sk.tuke.emulatoras.instrukcia.Branch;
-import sk.tuke.emulatoras.instrukcia.Mul;
-import sk.tuke.emulatoras.instrukcia.Store;
-import sk.tuke.emulatoras.instrukcia.False;
-import sk.tuke.emulatoras.instrukcia.EmptyOp;
-import sk.tuke.emulatoras.instrukcia.Eq;
-import sk.tuke.emulatoras.instrukcia.Fetch;
-import sk.tuke.emulatoras.instrukcia.Loop;
-import sk.tuke.emulatoras.instrukcia.Neg;
-import sk.tuke.emulatoras.instrukcia.True;
-import sk.tuke.emulatoras.instrukcia.And;
-import sk.tuke.emulatoras.instrukcia.Le;
-import sk.tuke.emulatoras.instrukcia.Add;
+import emulatoras.instrukcia.Push;
+import emulatoras.instrukcia.Sub;
+import emulatoras.instrukcia.Branch;
+import emulatoras.instrukcia.Mult;
+import emulatoras.instrukcia.Store;
+import emulatoras.instrukcia.False;
+import emulatoras.instrukcia.EmptyOp;
+import emulatoras.instrukcia.Eq;
+import emulatoras.instrukcia.Fetch;
+import emulatoras.instrukcia.Loop;
+import emulatoras.instrukcia.Neg;
+import emulatoras.instrukcia.True;
+import emulatoras.instrukcia.And;
+import emulatoras.instrukcia.Le;
+import emulatoras.instrukcia.Add;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -30,10 +30,11 @@ import java.util.regex.Pattern;
  *
  * @author Tomi
  */
-public class Parser {
+public class Parser  {
 
     private List<Instrukcia> instrukcie = new ArrayList<Instrukcia>();
     private Boolean inicializaciaStavov;
+    final String sipka = " \u21A6 ";
     
     public Parser() {
         instrukcie.add(new Add());           //vlozenie vsetkych regexp do listu
@@ -44,7 +45,7 @@ public class Parser {
         instrukcie.add(new False());
         instrukcie.add(new Fetch());
         instrukcie.add(new Le());
-        instrukcie.add(new Mul());
+        instrukcie.add(new Mult());
         instrukcie.add(new Neg());
         instrukcie.add(new Push());
         instrukcie.add(new Store());
@@ -53,7 +54,11 @@ public class Parser {
         instrukcie.add(new Loop());
        
     }
-
+/**
+ * Rozdelí vstupný kód a vykoná ho.
+ * @param kod
+ * @throws MyParserException 
+ */
     public void parse(String kod) throws MyParserException {
 
         kod = kod.replaceAll("\\s", "");          //nahradi vsetky biele miesta
@@ -97,7 +102,7 @@ public class Parser {
                                 }
                             }
                         } catch (Exception e) {                               //exception ak su zle zadane zatvorky
-                            throw new MyParserException("Zle ozatvorkovane :" + prikaz);
+                            throw new MyParserException("Zle ozátvorkované: " + prikaz);
                         }
                     } else {                                                 //nacitanie znaku kodu a pridanie do prikazu
                         prikaz = prikaz + c;
@@ -111,10 +116,14 @@ public class Parser {
         }
     }
 
+    /**
+     * 
+     * @param prikaz
+     * @throws MyParserException 
+     */
     public void vykonaj(String prikaz) throws MyParserException {                            //vykonanie prikazu
         prikaz = prikaz.toUpperCase();                              //potrebujem dorobit......
         prikaz = prikaz.replaceAll("\\s", "");
-        Boolean vykonanie = false;                                              //premenna ci sa dany prikaz vykona
 
         for (Instrukcia instr : instrukcie) {
             Pattern pattern = Pattern.compile(instr.regexp());                            //pattern pre regex
@@ -123,22 +132,13 @@ public class Parser {
             if (match.find()) {
                 log(prikaz);
                 // tu sa prikaz vykona
-                System.out.println("vykonanie  " + prikaz);
                 instr.vykonaj(prikaz);
-                vykonanie = true;
-            }
-        }
-        if (vykonanie) {
-        } else {
-            if (prikaz.equals("")) //ak sa nenajde v regexoch tak neexistuje prikaz
-            {
-                System.out.println("chybny kodssc" + prikaz);
-            } else {
-                System.out.println("chybny kod");
+                
             }
         }
     }
 
+    
     public void log(String prikaz) {
         // ulozime si data PO
         Vykonavanie vykonavanie = Vykonavanie.getInstance();
@@ -167,7 +167,7 @@ public class Parser {
             premenne_po = new String[premenne.size()];
             i = 0;
             for (String key : premenne.keySet()) {
-                premenne_po[i++] = key + " |-> " + premenne.get(key);
+                premenne_po[i++] = key + sipka + premenne.get(key);
             }
         }
 

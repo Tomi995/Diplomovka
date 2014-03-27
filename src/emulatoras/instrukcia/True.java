@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class True extends Instrukcia {
 
     /**
-     * vykonanie instrukcie TRUE
+     * Vykonanie inštrukcie TRUE.
      *
      * @param instrukcia
      */
@@ -27,13 +27,12 @@ public class True extends Instrukcia {
         Zasobnik.getZasobnik().vloz("TRUE");                                //vlozi do zasobnika hodnitu true
     }
 
+    /**
+     * Regulárny výraz pre funkciu TRUE.
+     * @return 
+     */
     @Override
     public String regexp() {
-        return "^TRUE$";
-    }
-
-    @Override
-    public String platnost() {
         return "^TRUE$";
     }
 }

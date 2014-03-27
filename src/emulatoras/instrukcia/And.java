@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -16,7 +16,7 @@ import emulatoras.ZasobnikException;
 public class And extends Instrukcia {
 
     /**
-     * vykonanie instrukcie AND
+     * Vykonanie inštrukcie AND.
      *
      * @param instrukcia
      */
@@ -29,12 +29,12 @@ public class And extends Instrukcia {
         if (!Zasobnik.getZasobnik().jeCislo()) {                            //overenie ci nie je prve cislo v zasobniku cislo
             prvaHodnota = Zasobnik.getZasobnik().vyber();                   //priradenie hodnoty do premennej a vybratie zo zasobnika (deje sa v zasobniku)
         } else {
-            throw new ZasobnikException("Zla hodnota v zasobniku");
+            throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu AND");
         }
         if (!Zasobnik.getZasobnik().jeCislo()) {                            //overenie ci nie je druhe cislo v zasobniku cislo
             druhaHodnota = Zasobnik.getZasobnik().vyber();                  //priradenie hodnoty do premennej a vybratie zo zasobnika (deje sa v zasobniku)
         } else {
-            throw new ZasobnikException("Zla hodnota v zasobniku");
+            throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu AND");
         }
         if ("tt".equals(prvaHodnota) && "tt".equals(druhaHodnota)) //vyhodnotenie 
         {
@@ -46,13 +46,12 @@ public class And extends Instrukcia {
         Zasobnik.getZasobnik().vloz(vysledok);                              //vlozenie do zasobnika
     }
 
+    /**
+     * Regulárny výraz pre funkciu AND.
+     * @return
+     */
     @Override
     public String regexp() {
-        return "^AND$";
-    }
-
-    @Override
-    public String platnost() {
         return "^AND$";
     }
 }

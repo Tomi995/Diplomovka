@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -20,8 +20,7 @@ import java.util.regex.Pattern;
 public class Push extends Instrukcia {
 
     /**
-     * vykonanie funkcie PUSH
-     *
+     *Vykonanie inštrukcie PUSH.
      * @param instrukcia
      */
     @Override
@@ -60,14 +59,13 @@ public class Push extends Instrukcia {
         }
     }
 
+    /**
+     * Regulárny výraz pre funkciu PUSH.
+     * @return 
+     */
     @Override
     public String regexp() {
         return "^PUSH-[(]*(([-]|[+])?)([0-9]+)[)]*$";
         //  return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$"; stary regex
-    }
-
-    @Override
-    public String platnost() {
-        return "^PUSH-[(]*(([-]|[+])*)([0-9]+)[)]*$";
     }
 }

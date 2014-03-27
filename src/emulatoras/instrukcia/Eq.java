@@ -2,14 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
 import emulatoras.Zasobnik;
 import emulatoras.ZasobnikException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -17,6 +16,11 @@ import java.util.logging.Logger;
  */
 public class Eq extends Instrukcia {
 
+    /**
+     * Vykonanie inštrukcie EQ.
+     * @param instrukcia
+     * @throws MyParserException 
+     */
     @Override
     public void vykonaj(String instrukcia) throws MyParserException {
         Boolean prveJeCislo = false;                                            //premenna na urcenie ci je prve cislo v zasobniku cislo alebo Bool hodnota
@@ -44,18 +48,16 @@ public class Eq extends Instrukcia {
                 Zasobnik.getZasobnik().vloz("FALSE");
             }
         } else {
-            throw new ZasobnikException("Zle hodnoty v zasobniku");             //exception ak su v zasobniku rozdielne typy hodnot (int bool)
+            throw new ZasobnikException("Zla hodnota v zasobniku pre instrukciu EQ");             //exception ak su v zasobniku rozdielne typy hodnot (int bool)
         }
         
     }
-
+    /**
+     * Regulárny výraz pre funkciu EQ.
+     * @return 
+     */
     @Override
     public String regexp() {
-        return "^EQ$";
-    }
-
-    @Override
-    public String platnost() {
         return "^EQ$";
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.tuke.emulatoras.instrukcia;
+package emulatoras.instrukcia;
 
 import emulatoras.Instrukcia;
 import emulatoras.MyParserException;
@@ -23,6 +23,12 @@ public class Store extends Instrukcia {
 
     Stav stav = new Stav();
 
+    /**
+     * Vykonanie inštrukcie STORE
+     *
+     * @param instrukcia
+     * @throws MyParserException
+     */
     @Override
     public void vykonaj(String instrukcia) throws MyParserException {
         String premenna;
@@ -40,21 +46,18 @@ public class Store extends Instrukcia {
                 hodnota = Integer.parseInt(Zasobnik.getZasobnik().vyber());     //zisti do akej premennej sa ma ulozit hodnota
                 stav.vlozHodnotu(premenna, hodnota);                            //vlozenie do stavu
             } catch (NumberFormatException e) {
-                    throw new MyParserException("Nieje mozne ulozit bool hodnotu do premennej: "+ premenna);
-                
-                }
+                throw new MyParserException("Nieje mozne ulozit bool hodnotu do premennej: " + premenna);
             }
-
         }
-    
-
-    @Override
-    public String regexp() {
-        return "^STORE-(([A-Z])+)$";
     }
 
+    /**
+     * Regulárny výraz pre funkciu STORE.
+     *
+     * @return
+     */
     @Override
-    public String platnost() {
+    public String regexp() {
         return "^STORE-(([A-Z])+)$";
     }
 }

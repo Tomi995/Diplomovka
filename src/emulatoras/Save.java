@@ -16,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.FileChooserUI;
 
 /**
- *
+ *Uloženie projektu.
  * @author Tomi
  */
 public class Save {
@@ -26,6 +26,12 @@ public class Save {
     public Save() {
     }
 
+    /**
+     * Ulozenie projektu do znamej adresy.
+     * @param text
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void save(String text) throws FileNotFoundException, IOException {
         text = text.toUpperCase();
         text = text.replaceAll("\\s", "");
@@ -48,7 +54,12 @@ public class Save {
             }
         }
     }
-
+    /**
+     * Uloženie projektu s možnoťou výberu umietnenia a vyberu nazvu.
+     * @param text
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void saveAs(String text) throws FileNotFoundException, IOException {
         text = text.toUpperCase();
         text = text.replaceAll("\\s", "");
@@ -76,6 +87,7 @@ public class Save {
     }
 
     /**
+     * Vrati adresu ulozenia.
      * @return the adresa
      */
     public String getAdresa() {
@@ -83,12 +95,18 @@ public class Save {
     }
 
     /**
+     * Nastaví adresu uloženia.
      * @param adresa the adresa to set
      */
     public void setAdresa(String adresa) {
         this.adresa = adresa;
     }
     
+    /**
+     * Skontroluje priponu ukladaného súboru.
+     * @param nazov
+     * @return 
+     */
     private Boolean kontrolaPripony(String nazov) {
         String regexp = ".txt$";
         Pattern pattern = Pattern.compile(regexp);

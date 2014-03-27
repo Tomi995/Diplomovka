@@ -68,8 +68,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         initComponents();
         analyza = new Analyza();     //vlozeny kod
         save = new Save();
-        jMenuItem7.setEnabled(false);
-        premenneViditelnost.setEnabled(false);
+        viditelnostExportov(false);
         setInicializaciaStavov(false);
 
         this.addWindowListener(new WindowAdapter() {    // definovanie operácii pri zatvoreni okna
@@ -97,6 +96,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
      *
      */
     public void vymaz() {
+        if(premenneFrame != null){
+        premenneFrame.setInicializovaneStavy(false);
+        }
         viditelnostTlacidlaAnalyzy(false);
         premenne_pred.setListData(new String[0]);
         premenne_po.setListData(new String[0]);
@@ -152,7 +154,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         premenne_po = new javax.swing.JList();
         jLabel8 = new javax.swing.JLabel();
-        premenneViditelnost = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -162,10 +163,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -285,7 +285,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pred inštrukciou"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pred inštrukciou", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 14))); // NOI18N
 
         jLabel4.setText("Stav");
 
@@ -341,12 +341,12 @@ public class EmulatorFrame extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Po inštrukcii"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Po inštrukcii", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 14))); // NOI18N
 
         jLabel5.setText("Stav");
 
@@ -399,17 +399,10 @@ public class EmulatorFrame extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                     .addComponent(jScrollPane4))
                 .addContainerGap())
         );
-
-        premenneViditelnost.setText("Premenne v stave s0");
-        premenneViditelnost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                premenneViditelnostActionPerformed(evt);
-            }
-        });
 
         jMenu2.setText("Súbor");
 
@@ -418,6 +411,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btn_Novy(evt);
+            }
+        });
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Novy2(evt);
             }
         });
         jMenu2.add(jMenuItem1);
@@ -430,6 +428,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 btn_Open(evt);
             }
         });
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Open2(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -439,6 +442,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 btn_Uloz(evt);
             }
         });
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Uloz2(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -446,6 +454,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
         jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btn_UlozAko(evt);
+            }
+        });
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_UlozAko2(evt);
             }
         });
         jMenu2.add(jMenuItem4);
@@ -460,6 +473,15 @@ public class EmulatorFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Export po riadkoch");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ExportPoRiadkoch(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
         jMenu2.add(jSeparator1);
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
@@ -469,16 +491,14 @@ public class EmulatorFrame extends javax.swing.JFrame {
                 btn_Ukoncenie(evt);
             }
         });
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Ukoncenie2(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Pomoc");
-
-        jMenuItem2.setText("O programe");
-        jMenu3.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -509,12 +529,9 @@ public class EmulatorFrame extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btn_step_forward)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(premenneViditelnost)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -537,12 +554,15 @@ public class EmulatorFrame extends javax.swing.JFrame {
                     .addComponent(btn_analyzuj)
                     .addComponent(btn_vykonaj)
                     .addComponent(btn_step_back)
-                    .addComponent(btn_step_forward)
-                    .addComponent(premenneViditelnost))
+                    .addComponent(btn_step_forward))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(stavovyRiadok)
                 .addGap(6, 6, 6))
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("");
+        jPanel1.getAccessibleContext().setAccessibleDescription("");
+        jPanel2.getAccessibleContext().setAccessibleName("");
 
         pack();
         setLocationRelativeTo(null);
@@ -564,7 +584,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
      */
     private void viditelnostTlacidlaAnalyzy(boolean analyzed) {
         if (analyzed) {
-            setStavovyRiadok("Analýza OK, stlačte prelož pre preklad.");
+            setStavovyRiadok("Analýza OK, stlačte Vykonaj pre vykonanie");
         }
         btn_vykonaj.setEnabled(analyzed);
         btn_analyzuj.setEnabled(!analyzed);
@@ -620,8 +640,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private void zmenaKodu(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_zmenaKodu
         viditelnostTlacidlaAnalyzy(false);
         ulozenyText = false;
-        jMenuItem7.setEnabled(false);
-        premenneViditelnost.setEnabled(false);
+        viditelnostExportov(false);
+    //    premenneViditelnost.setEnabled(false);
     }//GEN-LAST:event_zmenaKodu
 
     private void instrukcieValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_instrukcieValueChanged
@@ -660,17 +680,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btn_Uloz(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Uloz
-        String text = kod.getText();
-        try {
-            save.save(text);
-            ulozenyText = true;
-            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
-        } catch (FileNotFoundException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (IOException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (NullPointerException ex) {
-        }
+       
     }//GEN-LAST:event_btn_Uloz
     /**
      * Tlačidlo pre uloženie vstupných inštrukcií s voľbou umiestnenia a nazvu.
@@ -678,17 +688,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btn_UlozAko(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_UlozAko
-        String text = kod.getText();
-        try {
-            save.saveAs(text);
-            ulozenyText = true;
-            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
-        } catch (FileNotFoundException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (IOException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (NullPointerException ex) {
-        }
+       
     }//GEN-LAST:event_btn_UlozAko
     /**
      * Tlacidlo vykonania kódu.
@@ -717,7 +717,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
             vyplnitInstrukcie();
             viditelnostTlacidlaAnalyzy(false);
             setStavovyRiadok("OK");
-            jMenuItem7.setEnabled(true);
+            viditelnostExportov(true);
         } catch (StavException ex) {
             setStavovyRiadok(ex.getMessage());
             vymaz();
@@ -730,9 +730,10 @@ public class EmulatorFrame extends javax.swing.JFrame {
             viditelnostTlacidlaAnalyzy(false);
             vymaz();
         } catch (StackOverflowError ex) {
-            setStavovyRiadok("Nekonecny cyklus.");
+            setStavovyRiadok("Nekonečný cyklus");
             vymaz();
             viditelnostTlacidlaAnalyzy(false);
+            viditelnostExportov(false);
         }
     }//GEN-LAST:event_btn_Vykonaj
     /**
@@ -741,23 +742,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btn_Open(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Open
-        try {
-            Open open = new Open();
-            kod.setText(open.getKod());
-            save.setAdresa(open.getAdresa());
-            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
-            viditelnostTlacidlaAnalyzy(false);
-            vymaz();
-        } catch (FileNotFoundException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (IOException ex) {
-            setStavovyRiadok(ex.getMessage());
-        } catch (NullPointerException ex) {
-        }
+      
     }//GEN-LAST:event_btn_Open
 
     private void jButtonľActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonľActionPerformed
-        // TODO add your handling code here:
+        // Tlacidlo nie pre exit okno
     }//GEN-LAST:event_jButtonľActionPerformed
     /**
      * Tlačidlo pre ukončenie programu.
@@ -765,11 +754,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btn_Ukoncenie(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Ukoncenie
-        if (ulozenyText == false) {
-            ukoncenie();
-        } else {
-            System.exit(0);
-        }
+       
     }//GEN-LAST:event_btn_Ukoncenie
     /**
      * Tlačidlo pre potvrdenie ukončenia (ANO)
@@ -806,11 +791,12 @@ public class EmulatorFrame extends javax.swing.JFrame {
      */
     private void btn_analyzujAkcia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_analyzujAkcia
         try {
+            viditelnostExportov(false);
+            vymaz();
             analyza.resetVsetky_premenne();
             analyza.iniciuj(kod.getText());
             if (analyza.getVsetky_premenne().size() > 0) {
                 ukazPremenneFrame(analyza.getVsetky_premenne());
-                premenneViditelnost.setEnabled(true);
                 setInicializaciaStavov(false);
             }
             viditelnostTlacidlaAnalyzy(true);
@@ -826,18 +812,8 @@ public class EmulatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btn_Novy(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Novy
-        kod.setText("");
-        vymaz();
+      
     }//GEN-LAST:event_btn_Novy
-
-    /**
-     * Nastavenie viditeľnosti pre tlačidlá.
-     *
-     * @param evt
-     */
-    private void premenneViditelnostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_premenneViditelnostActionPerformed
-        premenneFrame.setVisible(true);
-    }//GEN-LAST:event_premenneViditelnostActionPerformed
 
     /**
      * Tlačidlo pre exportovanie programu.
@@ -848,12 +824,88 @@ public class EmulatorFrame extends javax.swing.JFrame {
         Krok krok = new Krok();
         krok.setInicializovanyStavNula(inicializaciaStavov);
         try {
-            Export export = new Export(isInicializaciaStavov());
+            Export export = new Export(kod.getText());
+            export.ExportObycajny(isInicializaciaStavov());
             setStavovyRiadok("Súbor exportovaný: " + export.getAdresa());
-        } catch (IOException | NullPointerException ex) {
+       }catch (MyParserException ex){
             setStavovyRiadok(ex.getMessage());
+        } catch (IOException | NullPointerException |StringIndexOutOfBoundsException ex) {
+            setStavovyRiadok("Neplatný export");
         }
     }//GEN-LAST:event_btn_Export
+
+    private void btn_Novy2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Novy2
+         viditelnostExportov(false);
+        kod.setText("");
+        vymaz();
+    }//GEN-LAST:event_btn_Novy2
+
+    private void btn_Open2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Open2
+     try {
+            viditelnostExportov(false);
+            Open open = new Open();
+            kod.setText(open.getKod());
+            save.setAdresa(open.getAdresa());
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
+            viditelnostTlacidlaAnalyzy(false);
+            vymaz();
+        } catch (FileNotFoundException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (IOException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (NullPointerException ex) {
+        }
+    }//GEN-LAST:event_btn_Open2
+
+    private void btn_Uloz2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Uloz2
+         String text = kod.getText();
+        try {
+            save.save(text);
+            ulozenyText = true;
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
+        } catch (FileNotFoundException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (IOException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (NullPointerException ex) {
+        }
+    }//GEN-LAST:event_btn_Uloz2
+
+    private void btn_UlozAko2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_UlozAko2
+        String text = kod.getText();
+        try {
+            save.saveAs(text);
+            ulozenyText = true;
+            setStavovyRiadok("Súbor uložený: " + save.getAdresa());
+        } catch (FileNotFoundException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (IOException ex) {
+            setStavovyRiadok(ex.getMessage());
+        } catch (NullPointerException ex) {
+        }
+    }//GEN-LAST:event_btn_UlozAko2
+
+    private void btn_Ukoncenie2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Ukoncenie2
+       if (ulozenyText == false) {
+            ukoncenie();
+        } else {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btn_Ukoncenie2
+
+    private void btn_ExportPoRiadkoch(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExportPoRiadkoch
+        Krok krok = new Krok();
+        krok.setInicializovanyStavNula(inicializaciaStavov);
+        try {
+            Export export = new Export(kod.getText());
+            export.ExportPoRiadkoch(isInicializaciaStavov());
+            setStavovyRiadok("Súbor exportovaný: " + export.getAdresa());
+        }catch (MyParserException ex){
+            setStavovyRiadok(ex.getMessage());
+        } catch (IOException | NullPointerException |StringIndexOutOfBoundsException ex) {
+            setStavovyRiadok("Neplatný export ");
+        }
+    }//GEN-LAST:event_btn_ExportPoRiadkoch
 
     /**
      * @param args the command line arguments
@@ -909,7 +961,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -930,7 +981,6 @@ public class EmulatorFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTextArea kod;
-    private javax.swing.JButton premenneViditelnost;
     private javax.swing.JList premenne_po;
     private javax.swing.JList premenne_pred;
     private javax.swing.JLabel stav_po;
@@ -952,5 +1002,11 @@ public class EmulatorFrame extends javax.swing.JFrame {
      */
     public void setInicializaciaStavov(boolean inicializaciaStavov) {
         this.inicializaciaStavov = inicializaciaStavov;
+    }
+    
+    private void viditelnostExportov( boolean viditelnost){
+    jMenuItem7.setEnabled(viditelnost);
+    jMenuItem2.setEnabled(viditelnost);
+    
     }
 }
